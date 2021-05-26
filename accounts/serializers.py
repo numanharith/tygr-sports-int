@@ -1,10 +1,24 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from pitches.models import Pitch
+from accounts.models import *
 from pitches.serializers import *
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
 
 class BookmarkSerializer(serializers.ModelSerializer):
     pitch = PitchSerializer(read_only=True)
+    class Meta:
+        model=Pitch
+        # fields = '__all__'
+        exclude = ['user','id']
+
+class PositionSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer(read_only=True)
     class Meta:
         model=Pitch
         # fields = '__all__'
