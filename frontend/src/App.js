@@ -1,19 +1,24 @@
-import { Container } from 'react-bootstrap'
-import React from 'react'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import React from 'react';
+import { Container } from 'react-bootstrap';
+import { BrowserRouter as Router, Route } from 'react-router-dom' 
+import Header from './components/Header';
+import Footer from './components/Footer';
+
+import HomePage from './pages/HomePage';
+import PitchesPage from './pages/PitchesPage'
 
 function App() {
   return (
-    <div>
+    <Router>
       <Header />
-      <main className="py-3">
+      <main className='py-3'>
         <Container>
-          <h1>TygrSports</h1>
+          <Route path='/' component={HomePage} exact />
+          <Route path='/pitches' component={PitchesPage} exact />
         </Container>
       </main>
       <Footer />
-    </div>
+    </Router>
   );
 }
 

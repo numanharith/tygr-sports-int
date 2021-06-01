@@ -1,17 +1,27 @@
 import React from 'react';
 import { Navbar, Nav, Container, Row } from 'react-bootstrap'
+import { LinkContainer } from 'react-router-bootstrap'
 
 function Header() {
   return (
     <header>
       <Navbar bg="light" expand="lg" collapseOnSelect>
         <Container>
-          <Navbar.Brand href="/">TygrSports</Navbar.Brand>
+          <LinkContainer to='/'>
+            <Navbar.Brand>TygrSports</Navbar.Brand>
+          </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="/play"><i className="fas fa-futbol"></i>Play</Nav.Link>
-              <Nav.Link href="/login"><i className="fas fa-user"></i>Login</Nav.Link>
+              <LinkContainer to='/play'>
+                <Nav.Link><i className="fas fa-futbol"></i>Play</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to='/pitches'>
+                <Nav.Link><i className="fas fa-map-marked"></i>Pitches</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to='/login'>
+                <Nav.Link><i className="fas fa-user"></i>Login</Nav.Link>
+              </LinkContainer>
             </Nav>
           </Navbar.Collapse>
         </Container>
