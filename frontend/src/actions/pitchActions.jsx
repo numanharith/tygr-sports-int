@@ -15,11 +15,11 @@ export const listPitches = () => async (dispatch) => {
       payload: data
     })
   } catch (error) {
-    dispatch({
-      type: PITCH_LIST_FAIL,
-      payload: error.response && error.response.data.message
-      ? error.response.data.message
-      : error.message
-    })
+      dispatch({
+        type: PITCH_LIST_FAIL,
+        payload: error.response && error.response.data.detail
+        ? error.response.data.detail
+        : error.message
+      })
   }
 }
