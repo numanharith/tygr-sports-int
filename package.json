@@ -1,0 +1,30 @@
+{
+  "name": "tygr-sports-int",
+  "version": "1.0.0",
+  "description": "Backend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/numanharith/tygr-sports-int.git"
+  },
+  "author": "Nu'man Harith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/numanharith/tygr-sports-int/issues"
+  },
+  "homepage": "https://github.com/numanharith/tygr-sports-int#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "express-validator": "^6.11.1",
+    "gravatar": "^1.8.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.12",
+    "request": "^2.88.2"
+  }
+}
