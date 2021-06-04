@@ -15,18 +15,7 @@ router.post(
     [
         check('name', 'A name is required!').not().isEmpty(),
         check('email', 'Please include a valid email!').isEmail(),
-        check(
-            'password',
-            'Please enter a password with at least 12 characters!'
-        ).isLength({ min: 12 }),
-        check('height', 'Please enter a valid height!').isInt({
-            min: 120,
-            max: 260,
-        }),
-        check('weight', 'Please enter a valid weight!').isInt({
-            min: 30,
-            max: 260,
-        }),
+        check('password', 'Please enter a password with at least 12 characters!').isLength({ min: 12 }),
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -34,7 +23,7 @@ router.post(
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { name, email, password, height, weight } = req.body;
+        const { name, email, password } = req.body;
 
         try {
             // Checks for existing registered email (if any)
@@ -58,8 +47,6 @@ router.post(
                 email,
                 avatar,
                 password,
-                height,
-                weight,
             });
 
             // Encrypts password
@@ -76,16 +63,10 @@ router.post(
             };
 
             // Sign token
-            jwt.sign(
-                payload,
-                config.get('jwtSecret'),
-                { expiresIn: 360000 },
-                (err, token) => {
-                    if (err) throw err;
-                    res.json({ token });
-                }
-            );
-
+            jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 360000 }, (err, token) => {
+                if (err) throw err;
+                res.json({ token });
+            });
         } catch (err) {
             console.error(err.message);
             res.status(500).send('Server error');
