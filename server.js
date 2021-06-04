@@ -5,8 +5,11 @@ const app = express();
 
 connectDB();
 
-app.get('/', (req, res) => res.send('API running'));
+// Middlewares
+app.use(express.json({ extended: false }));
 
+// Routes
+app.get('/', (req, res) => res.send('API running'));
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
