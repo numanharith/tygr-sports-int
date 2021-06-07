@@ -1,20 +1,24 @@
 const express = require('express');
-const connectDB = require('./config/db');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
+
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
-connectDB();
+// Middleware
+app.use(express.json());
+app.use(cookieParser());
 
-// Middlewares
-app.use(express.json({ extended: false }));
+// MongoDB
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+  if (err) return console.error(err);
+  console.log('Connected to MongoDB');
+});
 
 // Routes
-app.get('/', (req, res) => res.send('API running'));
-app.use('/api/users', require('./routes/api/users'));
-app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/profile', require('./routes/api/profile'));
-app.use('/api/pitches', require('./routes/api/pitches'));
-
-const PORT = process.env.PORT || 8000;
-
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.use('/auth', require('./routers/userRouter'));
+app.use('/bookingreq', require('./routers/bookingReqRouter'));
