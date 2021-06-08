@@ -18,7 +18,7 @@ const RegisterPage = () => {
       const registerData = { username, password, passwordVerify };
       await axios.post('http://localhost:5000/api/auth/', registerData);
       await getLoggedIn();
-      history.pushState('/');
+      history.push('/');
     } catch (err) {
       console.error(err);
     }

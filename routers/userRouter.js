@@ -80,5 +80,19 @@ router.get('/loggedin', (req, res) => {
     res.json(false);
   }
 });
- 
+
+// Checks if user is an admin
+router.get('/admin', async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.json(false);
+
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findOne({ _id: verified.user });
+    if (user.isAdmin === true) res.send(true);
+  } catch (err) {
+    res.json(false);
+  }
+});
+
 module.exports = router;

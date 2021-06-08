@@ -7,7 +7,7 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const { getLoggedIn } = useContext(AuthContext);
+  const { getLoggedIn, getAdmin } = useContext(AuthContext);
 
   const history = useHistory();
 
@@ -17,6 +17,7 @@ const LoginPage = () => {
       const loginData = { username, password };
       await axios.post('http://localhost:5000/api/auth/login', loginData);
       await getLoggedIn();
+      await getAdmin(); 
       history.push('/');
     } catch (err) {
       console.error(err);

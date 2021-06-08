@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 
+// Allows only logged in user
 const auth = (req, res, next) => {
   try {
     const token = req.cookies.token;
