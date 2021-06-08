@@ -6,9 +6,11 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import BookingReqPage from './pages/BookingReqPage'
 import PitchPage from './pages/PitchPage'
+import CreateBookingPage from './pages/CreateBookingPage';
+
 
 export default function Router() {
-  const { loggedIn } = useContext(AuthContext);
+  const { loggedIn, admin } = useContext(AuthContext);
   return (
     <BrowserRouter>
       <Navbar />
@@ -20,6 +22,9 @@ export default function Router() {
             <Route path='/register'><RegisterPage /></Route>
             <Route path='/login'><LoginPage /></Route>
           </>
+        )}
+        {admin === true && (
+            <Route path='/createbooking'><CreateBookingPage /></Route>
         )}
         {loggedIn === true && (
           <>

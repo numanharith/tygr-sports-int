@@ -18,8 +18,8 @@ router.post('/', auth, async (req, res) => {
 // Get all pitches
 router.get('/', async (req, res) => {
   try {
-    const pitch = await Pitch.find();
-    res.json(pitch);
+    const pitches = await Pitch.find();
+    res.json(pitches);
   } catch (err) {
     console.error(err);
     res.status(500).send();
