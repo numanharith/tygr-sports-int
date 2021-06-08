@@ -7,4 +7,4 @@ const bookingReqSchema = new Schema({
   // end: { type: Date, required: true },
 });
 
-module.exports = model('BookingReq', bookingReqSchema );
+module.exports = model('BookingReq', bookingReqSchema);

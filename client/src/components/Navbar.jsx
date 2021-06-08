@@ -9,6 +9,7 @@ export default function Navbar() {
   return (
     <div>
       <Link to='/'>Home</Link>
+      <Link to='/pitches'>Pitches</Link>
       {loggedIn === false && (
         <>
           <Link to='/register'>Register</Link>
@@ -18,6 +19,7 @@ export default function Navbar() {
       {loggedIn === true && (
         <>
           <Link to='/bookingreq'>My Requests</Link>
+          <Link to='/addpitch'>Add Pitch</Link>
           <LogoutBtn />
         </>
       )}

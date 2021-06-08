@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import BookingReqPage from './pages/BookingReqPage'
+import PitchPage from './pages/PitchPage'
 
 export default function Router() {
   const { loggedIn } = useContext(AuthContext);
@@ -13,6 +14,7 @@ export default function Router() {
       <Navbar />
       <Switch>
         <Route exact path='/'><div>Home</div></Route>
+        <Route path='/pitches'><PitchPage /></Route>
         {loggedIn === false && (
           <>
             <Route path='/register'><RegisterPage /></Route>
