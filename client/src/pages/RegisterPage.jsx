@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
+import AuthContext from '../context/AuthContext';
+import { useHistory } from 'react-router';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVerify, setPasswordVerify] = useState('');
 
+  const { getLoggedIn } = useContext(AuthContext);
+
+  const history = useHistory();
+  
   const register = async (e) => {
     e.preventDefault();
     try {
       const registerData = { username, password, passwordVerify };
       await axios.post('http://localhost:5000/api/auth/', registerData);
+      await getLoggedIn();
+      history.pushState('/');
     } catch (err) {
       console.error(err);
     }

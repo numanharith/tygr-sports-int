@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
+import AuthContext from '../context/AuthContext';
+import { useHistory } from 'react-router';
 
-const Login = () => {
+const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
+  const { getLoggedIn } = useContext(AuthContext);
+
+  const history = useHistory();
 
   const login = async (e) => {
     e.preventDefault();
     try {
       const loginData = { username, password };
       await axios.post('http://localhost:5000/api/auth/login', loginData);
+      await getLoggedIn();
+      history.push('/');
     } catch (err) {
       console.error(err);
     }
@@ -27,4 +35,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;
