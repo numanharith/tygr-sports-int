@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { PitchForm, Pitch } from '../components/Pitch';
+import AuthContext from '../context/AuthContext';
 
 const PitchPage = () => {
+  const { admin } = useContext(AuthContext);
+
   const [pitches, setPitches] = useState([]);
 
   const getPitches = async () => {
@@ -16,9 +19,11 @@ const PitchPage = () => {
 
   return (
     <>
-      <PitchForm pitches={pitches} getPitches={getPitches} />
+      {admin === true && (
+        <PitchForm pitches={pitches} getPitches={getPitches} />
+      )}
       <div>
-        <Pitch pitches={pitches}/>
+        <Pitch pitches={pitches} />
       </div>
     </>
   );

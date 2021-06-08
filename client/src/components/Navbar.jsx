@@ -12,14 +12,13 @@ export default function Navbar() {
       <Link to='/pitches'>Pitches</Link>
       {loggedIn === false && (
         <>
-          <Link to='/register'>Register</Link>
+          <Link to='/register'>Register</Link>  
           <Link to='/login'>Login</Link>
         </>
       )}
       {loggedIn === true && (
         <>
           <Link to='/bookingreq'>My Requests</Link>
-          <Link to='/addpitch'>Add Pitch</Link>
           <LogoutBtn />
         </>
       )}

@@ -25,7 +25,7 @@ export const PitchForm = ({ getPitches }) => {
     try {
       const addPitchData = { name, address, postalCode, image };
       await axios.post('http://localhost:5000/api/pitches', addPitchData);
-      getPitches()
+      getPitches();
     } catch (err) {
       console.error(err);
     }
