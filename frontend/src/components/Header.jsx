@@ -1,67 +1,23 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navbar, Nav, Container, Row, NavDropdown } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import { logout } from '../actions/userActions';
+import { Navbar, Nav, Container, Row } from 'react-bootstrap'
 
 function Header() {
-    const userLogin = useSelector((state) => state.userLogin);
-    const { userInfo } = userLogin;
-
-    const dispatch = useDispatch();
-    const logoutHandler = () => {
-        dispatch(logout());
-    };
-
-    return (
-        <header>
-            <Navbar bg='light' expand='lg' collapseOnSelect>
-                <Container>
-                    <LinkContainer to='/'>
-                        <Navbar.Brand>TygrSports</Navbar.Brand>
-                    </LinkContainer>
-                    <Navbar.Toggle aria-controls='basic-navbar-nav' />
-                    <Navbar.Collapse id='basic-navbar-nav'>
-                        <Nav className='mr-auto'>
-                            <LinkContainer to='/play'>
-                                <Nav.Link>
-                                    <i className='fas fa-futbol'></i>Play
-                                </Nav.Link>
-                            </LinkContainer>
-                            <LinkContainer to='/pitches'>
-                                <Nav.Link>
-                                    <i className='fas fa-map-marked'></i>Pitches
-                                </Nav.Link>
-                            </LinkContainer>
-
-                            {userInfo ? (
-                                <NavDropdown
-                                    title={userInfo.name}
-                                    id='username'
-                                >
-                                    <LinkContainer to='/profile'>
-                                        <NavDropdown.Item>
-                                            Profile
-                                        </NavDropdown.Item>
-                                    </LinkContainer>
-
-                                    <NavDropdown.Item onClick={logoutHandler}>
-                                        Logout
-                                    </NavDropdown.Item>
-                                </NavDropdown>
-                            ) : (
-                                <LinkContainer to='/login'>
-                                    <Nav.Link>
-                                        <i className='fas fa-user'></i>Login
-                                    </Nav.Link>
-                                </LinkContainer>
-                            )}
-                        </Nav>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-        </header>
-    );
+  return (
+    <header>
+      <Navbar bg="light" expand="lg" collapseOnSelect>
+        <Container>
+          <Navbar.Brand href="/">TygrSports</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+              <Nav.Link href="/play"><i className="fas fa-futbol"></i>Play</Nav.Link>
+              <Nav.Link href="/login"><i className="fas fa-user"></i>Login</Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+    </header>
+  );
 }
 
 export default Header;
