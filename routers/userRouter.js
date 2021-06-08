@@ -8,12 +8,12 @@ router.post('/', async (req, res) => {
   try {
     const { username, password, passwordVerify } = req.body;
 
+    // Form input validations
     if (!username || !password || !passwordVerify) return res.status(400).json({ errorMessage: 'Please enter all the required fields!' });
-
     if (password.length < 6) return res.status(400).json({ errorMessage: 'Please enter a password with at least 6 characters!' });
-
     if (password !== passwordVerify) return res.status(400).json({ errorMessage: 'The two passwords do not match!' });
 
+    // Searches if username is already in use
     const existingUser = await User.findOne({ username });
     if (existingUser) return res.status(400).json({ errorMessage: 'The username entered is already in use!' });
 

@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
-const ProfileSchema = new Schema({
-    user: { type: Schema.Types.ObjectId, ref: 'user' },
-    height: { type: Number, required: true },
-    weight: { type: Number, required: true },
-    bio: { type: String },
-    date: { type: Date, default: Date.now() },
+const profileSchema = new Schema({
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
+  height: { type: Number, required: true },
+  weight: { type: Number, required: true },
+  bio: { type: String },
+  bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }],
+  date: { type: Date, default: Date.now() },
 });
 
-module.exports = model('Profile', ProfileSchema);
+module.exports = model('Profile', profileSchema);

@@ -23,15 +23,17 @@ export default function Navbar() {
           <Link to='/createbooking'>Create booking</Link>
           <Link to='/bookingreq'>Booking Requests</Link>
           <Link to='/addpitch'>Add pitch</Link>
-          <LogoutBtn />
         </>
       )}
       {loggedIn === true && admin === false && (
         <>
           <Link to='/mybookingreq'>My Requests</Link>
           <Link to='/mybookings'>My Bookings</Link>
-          <LogoutBtn />
+          <Link to='/profile'>Profile</Link>
         </>
+      )}
+      {loggedIn === true && admin === true && (
+        <Link to='/logout'>Logout</Link>
       )}
     </div>
   );

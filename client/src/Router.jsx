@@ -8,10 +8,13 @@ import BookingReqPage from './pages/BookingReqPage'
 import PitchPage from './pages/PitchPage'
 import CreateBookingPage from './pages/CreateBookingPage';
 import BookingsPage from './pages/BookingsPage';
+import LogoutBtn from './components/LogoutBtn';
+import ProfilePage from './pages/ProfilePage';
 
 
 export default function Router() {
   const { loggedIn, admin } = useContext(AuthContext);
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -31,7 +34,11 @@ export default function Router() {
         {loggedIn === true && (
           <>
             <Route path='/bookingreq'><BookingReqPage /></Route>
+            <Route path='/profile'><ProfilePage /></Route>
           </>
+        )}
+        {loggedIn === true && admin === true && (
+          <Route path='/logout'><LogoutBtn /></Route>
         )}
       </Switch>
     </BrowserRouter>

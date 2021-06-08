@@ -12,7 +12,6 @@ const BookingCard = ({ booking }) => {
   const joinHandler = async (e) => {
     e.preventDefault();
     try {
-      console.log(booking._id)
       await axios.put(`http://localhost:5000/api/bookings/join/${booking._id}`);
     } catch (err) {
       console.error(err);

@@ -26,3 +26,4 @@ app.use('/api/auth', require('./routers/userRouter'));
 app.use('/api/bookingreq', require('./routers/bookingReqRouter'));
 app.use('/api/pitches', require('./routers/pitchRouter'));
 app.use('/api/bookings', require('./routers/bookingRouter'));
+app.use('/api/profile', require('./routers/profileRouter'));

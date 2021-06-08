@@ -36,7 +36,7 @@ router.put('/join/:id', async (req, res) => {
     const token = req.cookies.token;
     const verified = jwt.verify(token, process.env.JWT_SECRET);
 
-    await Booking.findByIdAndUpdate(req.params.id, { $push: { users: verified.user } });
+    await Booking.findByIdAndUpdate(req.params.id, { $addToSet: { users: verified.user } });
   } catch (err) {
     console.error(err);
     res.status(500).send();

@@ -18,7 +18,7 @@ const BookingReqPage = () => {
     <div>
       <BookingReqForm getBookingReqs={getBookingReqs} />
       <BookingReqsList bookingReqs={bookingReqs} />
-    </div>
+      </div>
   );
 };
 
