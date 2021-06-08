@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import LogoutBtn from './LogoutBtn';
@@ -23,6 +23,7 @@ export default function Navbar() {
           <Link to='/createbooking'>Create booking</Link>
           <Link to='/bookingreq'>Booking Requests</Link>
           <Link to='/addpitch'>Add pitch</Link>
+          <LogoutBtn />
         </>
       )}
       {loggedIn === true && admin === false && (
@@ -30,10 +31,8 @@ export default function Navbar() {
           <Link to='/mybookingreq'>My Requests</Link>
           <Link to='/mybookings'>My Bookings</Link>
           <Link to='/profile'>Profile</Link>
+          <LogoutBtn />
         </>
-      )}
-      {loggedIn === true && admin === true && (
-        <Link to='/logout'>Logout</Link>
       )}
     </div>
   );

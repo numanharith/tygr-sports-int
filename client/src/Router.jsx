@@ -37,9 +37,6 @@ export default function Router() {
             <Route path='/profile'><ProfilePage /></Route>
           </>
         )}
-        {loggedIn === true && admin === true && (
-          <Route path='/logout'><LogoutBtn /></Route>
-        )}
       </Switch>
     </BrowserRouter>
   )

@@ -33,16 +33,19 @@ router.post('/me', auth, async (req, res) => {
 })
 
 // Get current user's profile
-// router.put('/me', auth, async (req, res) => {
-//   try {
-//     const token = req.cookies.token;
-//     const verified = jwt.verify(token, process.env.JWT_SECRET);
+router.get('/me', auth, async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const user = verified.user;
 
-//     await Booking.findByIdAndUpdate(req.params.id, { $push: { users: verified.user } });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send();
-//   }
-// });
+    const profile = await Profile.findOne({ "user": user }).populate('user');
+    if (!profile) return res.json(null);
+    res.json(profile);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send();
+  }
+});
 
 module.exports = router;

@@ -1,45 +1,37 @@
-import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import CreateProfileForm from '../components/CreateProfileForm';
 
 const ProfilePage = () => {
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
-  const [bio, setBio] = useState('');
+  const [existingProfile, setExistingProfile] = useState(false);
 
-  const createProfile = async (e) => {
-    e.preventDefault();
+  const getProfile = async () => {
     try {
-      const profileData = { height, weight, bio };
-      console.log(profileData);
-      await axios.post('http://localhost:5000/api/profile/me', profileData);
+      const profile = await axios.get('http://localhost:5000/api/profile/me');
+      if (profile.data !== null) {
+        setExistingProfile(profile.data)
+      } 
     } catch (err) {
       console.error(err);
     }
   };
 
+  useEffect(() => {
+    getProfile();
+  }, [])
+
   return (
-    <div>
-      <Form onSubmit={createProfile}>
-        <Form.Group controlId='height'>
-          <Form.Label>Height</Form.Label>
-          <Form.Control type='number' placeholder='Height in cm' value={height} onChange={(e) => setHeight(e.target.value)} />
-        </Form.Group>
-
-        <Form.Group controlId='weight'>
-          <Form.Label>Weight</Form.Label>
-          <Form.Control type='number' placeholder='Weight in kg' value={weight} onChange={(e) => setWeight(e.target.value)} />
-        </Form.Group>
-
-        <Form.Group controlId='bio'>
-          <Form.Label>Bio</Form.Label>
-          <Form.Control as='textarea' placeholder='Describe yourself!' value={bio} onChange={(e) => setBio(e.target.value)} />
-        </Form.Group>
-
-        <Button type='submit' variant='primary'>Submit</Button>
-      </Form>
-    </div>
-  );
+    <>
+      {existingProfile === false ? <CreateProfileForm /> :
+        <div>
+          <h1>{existingProfile.user.username}</h1>
+          <p>{existingProfile.height}</p>
+          <p>{existingProfile.weight}</p>
+          <p>{existingProfile.bio}</p>
+        </div>
+      }
+    </>
+  )
 };
 
 export default ProfilePage;
