@@ -49,7 +49,7 @@ router.post('/login', async (req, res) => {
 
     // Decrypts password and verify
     const passwordCorrect = await bcrypt.compare(password, existingUser.passwordHash);
-    if (!passwordCorrect) return res.status(401), json({ errorMessage: 'Wrong credentials has been entered!' });
+    if (!passwordCorrect) return res.status(401).json({ errorMessage: 'Wrong credentials has been entered!' });
 
     // Logs the user in
     const token = jwt.sign({ user: existingUser._id }, process.env.JWT_SECRET);
@@ -88,7 +88,8 @@ router.get('/admin', async (req, res) => {
     if (!token) return res.json(false);
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await User.findOne({ _id: verified.user });
+    // const userId = verified.user
+    const user = await User.findById( verified.user );
     if (user.isAdmin === true) res.send(true);
   } catch (err) {
     res.json(false);

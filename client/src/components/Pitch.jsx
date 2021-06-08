@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Col, Card } from 'react-bootstrap';
 
-export const Pitch = ({ pitches }) => {
-  return pitches.map((pitch) => {
-    return (
-      <div key={pitch._id}>
-        <h1>{pitch.name}</h1>
-        <p>{pitch.address}</p>
-        <p>{pitch.postalCode}</p>
-        <img src={pitch.image} alt={pitch.name} />
-      </div>
-    )
-  })
+export const Pitch = ({ pitch }) => {
+  return (
+    <Col>
+      <Card.Img variant='top' src={pitch.image} />
+      <Card.Body>
+        <Card.Title>{pitch.name}</Card.Title>
+        <Card.Text>{pitch.address}</Card.Text>
+        <Card.Text>{pitch.postalCode}</Card.Text>
+      </Card.Body>
+    </Col>
+  );
 };
 
 export const PitchForm = ({ getPitches }) => {

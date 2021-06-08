@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage';
 import BookingReqPage from './pages/BookingReqPage'
 import PitchPage from './pages/PitchPage'
 import CreateBookingPage from './pages/CreateBookingPage';
+import BookingsPage from './pages/BookingsPage';
 
 
 export default function Router() {
@@ -17,6 +18,7 @@ export default function Router() {
       <Switch>
         <Route exact path='/'><div>Home</div></Route>
         <Route path='/pitches'><PitchPage /></Route>
+        <Route path='/bookings'><BookingsPage /></Route>
         {loggedIn === false && (
           <>
             <Route path='/register'><RegisterPage /></Route>
