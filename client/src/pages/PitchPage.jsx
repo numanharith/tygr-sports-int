@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Pitch } from '../components/Pitch';
-import AuthContext from '../context/AuthContext';
 import { Col, Row } from 'react-bootstrap';
 
 const PitchPage = () => {
@@ -9,8 +8,8 @@ const PitchPage = () => {
 
   const getPitches = async () => {
     try {
-      const pitchesRes = await axios.get('/api/pitches');
-      setPitches(pitchesRes.data);
+      const { data } = await axios.get('http://localhost:5000/api/pitches');
+      setPitches(data);
     } catch (err) {
       console.error(err);
     }

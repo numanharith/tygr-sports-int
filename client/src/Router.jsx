@@ -12,7 +12,7 @@ import ProfilePage from './pages/ProfilePage';
 import { Container } from 'react-bootstrap'
 import Footer from './components/Footer';
 import { PitchForm } from './components/Pitch';
-
+import MyBookingsPage from './pages/booking/MyBookingsPage';
 
 export default function Router() {
   const { loggedIn, admin } = useContext(AuthContext);
@@ -38,10 +38,11 @@ export default function Router() {
                 <Route path='/addpitch' component={PitchForm}></Route>
               </Fragment>
             )}
-            {loggedIn === true && (
+            {loggedIn === true && admin === false && (
               <Fragment>
                 <Route path='/bookingreq' component={BookingReqPage}></Route>
                 <Route path='/profile' component={ProfilePage}></Route>
+                <Route path='/mybookings' component={MyBookingsPage}></Route>
               </Fragment>
             )}
           </Switch>

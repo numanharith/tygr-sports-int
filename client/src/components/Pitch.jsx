@@ -39,7 +39,7 @@ export const PitchForm = ({ getPitches }) => {
     e.preventDefault();
     try {
       const addPitchData = { name, address, postalCode, image };
-      await axios.post('/api/pitches', addPitchData);
+      await axios.post('http://localhost:5000/api/pitches', addPitchData);
       getPitches();
     } catch (err) {
       console.error(err);

@@ -16,7 +16,7 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       const registerData = { username, password, passwordVerify };
-      await axios.post('/api/auth/', registerData);
+      await axios.post('http://localhost:5000/api/auth/', registerData);
       await getLoggedIn();
       history.push('/');
     } catch (err) {

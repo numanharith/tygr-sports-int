@@ -16,7 +16,7 @@ app.use(cookieParser());
 app.use(cors({ origin: ['http://localhost:3000'], credentials: true }));
 
 // MongoDB
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, (err) => {
   if (err) return console.error(err);
   console.log('Connected to MongoDB');
 });

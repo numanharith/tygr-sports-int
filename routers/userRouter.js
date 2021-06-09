@@ -77,6 +77,8 @@ router.get('/loggedin', (req, res) => {
 
     res.send(true);
   } catch (err) {
+    console.error(err)
+    res.status(500).send();
     res.json(false);
   }
 });
@@ -92,6 +94,8 @@ router.get('/admin', async (req, res) => {
     const user = await User.findById( verified.user );
     if (user.isAdmin === true) res.send(true);
   } catch (err) {
+    console.error(err);
+    res.status(500).send();
     res.json(false);
   }
 });

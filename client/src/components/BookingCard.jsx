@@ -15,7 +15,7 @@ const BookingCard = ({ booking }) => {
 
   const joinHandler = async (e) => {
     try {
-      await axios.put(`/bookings/join/${booking._id}`);
+      await axios.put(`http://localhost:5000/api/bookings/join/${booking._id}`);
     } catch (err) {
       console.error(err);
     }
@@ -32,7 +32,7 @@ const BookingCard = ({ booking }) => {
   // Checks if user has joined booking
   const joinedBooking = async () => {
     try {
-      const { data } = await axios.get(`/api/bookings/${booking._id}`);
+      const { data } = await axios.get(`http://localhost:5000/api/bookings/${booking._id}`);
       if (data === true) setUserBooked(true);
     } catch (err) {
       console.error(err);

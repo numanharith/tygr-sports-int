@@ -6,14 +6,33 @@ const mongoose = require('mongoose');
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 
-// Add a new booking
-router.post('/createbooking', auth, async (req, res) => {
+// Get users's bookings to dispay on MyBookingsPage
+router.get('/mybookings', async (req, res) => {
   try {
-    const { pitch, start, end } = req.body;
-    // pitch = mongoose.Types.ObjectId(pitch);
-    const newBooking = new Booking({ pitch, start, end });
-    const savedBooking = await newBooking.save();
-    res.json(savedBooking);
+    const token = req.cookies.token;
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+    // Populates both bookings and pitch (in the populated bookings object) using deep population
+    const user = await User.findById(verified.user).populate({ path: 'bookings', populate: { path: 'pitch' } });
+    res.json(user.bookings);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send();
+  }
+});
+
+// Checks on BookingCard if user has joined the booking
+router.get('/:bookingid', async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(verified.user);
+    if (user.bookings.includes(req.params.bookingid)) {
+      res.json(true);
+    } else {
+      res.json(false);
+    }
   } catch (err) {
     console.error(err);
     res.status(500).send();
@@ -26,6 +45,20 @@ router.get('/', async (req, res) => {
     const bookings = await Booking.find().populate('pitch');
 
     res.json(bookings);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send();
+  }
+});
+
+// Add a new booking
+router.post('/createbooking', auth, async (req, res) => {
+  try {
+    const { pitch, start, end } = req.body;
+    // pitch = mongoose.Types.ObjectId(pitch);
+    const newBooking = new Booking({ pitch, start, end });
+    const savedBooking = await newBooking.save();
+    res.json(savedBooking);
   } catch (err) {
     console.error(err);
     res.status(500).send();
@@ -51,24 +84,6 @@ router.put('/join/:id', async (req, res) => {
 
     // Add booking id to user's booking's array
     await User.findByIdAndUpdate(verified.user, { $addToSet: { bookings: req.params.id } });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send();
-  }
-});
-
-// Checks on BookingCard if user has joined the booking
-router.get('/:bookingid', async (req, res) => {
-  try {
-    const token = req.cookies.token;
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-
-    const user = await User.findById(verified.user)
-    if (user.bookings.includes(req.params.bookingid)) {
-      res.json(true)
-    } else {
-      res.json(false)
-    }
   } catch (err) {
     console.error(err);
     res.status(500).send();

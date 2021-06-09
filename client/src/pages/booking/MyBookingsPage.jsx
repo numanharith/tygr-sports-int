@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row, Col } from 'react-bootstrap';
-import BookingCard from '../components/BookingCard';
+import BookingCard from '../../components/BookingCard';
 
-const BookingsPage = () => {
+const MyBookingsPage = () => {
   const [bookings, setBookings] = useState([]);
 
   const getBookings = async () => {
     try {
-      const bookingsData = await axios.get('http://localhost:5000/api/bookings');
-      setBookings(bookingsData.data);
+      const { data } = await axios.get('http://localhost:5000/api/bookings/mybookings');
+      console.log(data)
+      setBookings(data);
     } catch (err) {
       console.error(err);
     }
@@ -32,4 +33,4 @@ const BookingsPage = () => {
   );
 };
 
-export default BookingsPage;
+export default MyBookingsPage;
