@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import { useHistory } from 'react-router';
@@ -16,7 +16,7 @@ const RegisterPage = () => {
     e.preventDefault();
     try {
       const registerData = { username, password, passwordVerify };
-      await axios.post('http://localhost:5000/api/auth/', registerData);
+      await axios.post('/api/auth/', registerData);
       await getLoggedIn();
       history.push('/');
     } catch (err) {
@@ -25,7 +25,7 @@ const RegisterPage = () => {
   };
 
   return (
-    <>
+    <Fragment>
       <h1>Register for a new account</h1>
       <form onSubmit={register}>
         <input type='text' placeholder='Username' onChange={(e) => setUsername(e.target.value)} value={username} />
@@ -33,7 +33,7 @@ const RegisterPage = () => {
         <input type='password' placeholder='Confirm password' onChange={(e) => setPasswordVerify(e.target.value)} value={passwordVerify} />
         <button type='submit'>Register</button>
       </form>
-    </>
+    </Fragment>
   );
 };
 

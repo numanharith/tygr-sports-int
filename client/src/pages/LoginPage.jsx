@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, Fragment } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 import { useHistory } from 'react-router';
@@ -15,7 +15,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const loginData = { username, password };
-      await axios.post('http://localhost:5000/api/auth/login', loginData);
+      await axios.post('/api/auth/login', loginData);
       await getLoggedIn();
       await getAdmin(); 
       history.push('/');
@@ -25,14 +25,14 @@ const LoginPage = () => {
   };
 
   return (
-    <>
+    <Fragment>
       <h1>Log into your account</h1>
       <form onSubmit={login}>
         <input type='text' placeholder='Username' onChange={(e) => setUsername(e.target.value)} value={username} />
         <input type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password} />
         <button type='submit'>Login</button>
       </form>
-    </>
+    </Fragment>
   );
 };
 

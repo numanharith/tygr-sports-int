@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { PitchForm, Pitch } from '../components/Pitch';
+import { Pitch } from '../components/Pitch';
 import AuthContext from '../context/AuthContext';
-import { Container, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 
 const PitchPage = () => {
-  const { admin } = useContext(AuthContext);
-
   const [pitches, setPitches] = useState([]);
 
   const getPitches = async () => {
     try {
-      const pitchesRes = await axios.get('http://localhost:5000/api/pitches');
+      const pitchesRes = await axios.get('/api/pitches');
       setPitches(pitchesRes.data);
     } catch (err) {
       console.error(err);
@@ -23,16 +21,15 @@ const PitchPage = () => {
   }, []);
 
   return (
-    <>
-      {admin === true && <PitchForm pitches={pitches} getPitches={getPitches} />}
-      <Container>
-        <Row>
-          {pitches.map((pitch) => (
-            <Pitch pitch={pitch} key={pitch._id} />
-          ))}
-        </Row>
-      </Container>
-    </>
+    <div>
+      <Row>
+        {pitches.map((pitch) => (
+          <Col key={pitch._id} sm={12} md={6} lg={4} xl={3}>
+            <Pitch pitch={pitch} />
+          </Col>
+        ))}
+      </Row>
+    </div>
   );
 };
 

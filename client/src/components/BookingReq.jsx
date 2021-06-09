@@ -10,7 +10,7 @@ export const BookingReqForm = ({ getBookingReqs }) => {
       const bookingReqData = {
         pitch: bookingReqPitch,
       };
-      await axios.post('http://localhost:5000/api/bookingreq', bookingReqData);
+      await axios.post('/api/bookingreq', bookingReqData);
       getBookingReqs();
     } catch (err) {
       console.error(err);

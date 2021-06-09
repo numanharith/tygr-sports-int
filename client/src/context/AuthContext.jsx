@@ -8,12 +8,12 @@ const AuthContextProvider = ({ children }) => {
   const [admin, setAdmin] = useState(false);
 
   const getAdmin = async() => {
-    const res = await axios.get('http://localhost:5000/api/auth/admin');
+    const res = await axios.get('/api/auth/admin');
     setAdmin(res.data)
   }
 
   const getLoggedIn = async () => {
-    const res = await axios.get('http://localhost:5000/api/auth/loggedin');
+    const res = await axios.get('/api/auth/loggedin');
     setLoggedIn(res.data);
   };
 

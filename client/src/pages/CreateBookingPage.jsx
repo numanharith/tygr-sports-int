@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import axios from 'axios';
 
 const CreateBookingPage = () => {
@@ -8,7 +8,7 @@ const CreateBookingPage = () => {
   const [createBookingEnd, setCreateBookingEnd] = useState('');
 
   const getPitches = async () => {
-    const pitchesRes = await axios.get('http://localhost:5000/api/pitches');
+    const pitchesRes = await axios.get('/api/pitches');
     setPitches(pitchesRes.data);
   };
 
@@ -20,7 +20,7 @@ const CreateBookingPage = () => {
         start: createBookingStart,
         end: createBookingEnd,
       };
-      await axios.post('http://localhost:5000/api/bookings/createbooking', createBookingData);
+      await axios.post('/api/bookings/createbooking', createBookingData);
     } catch (err) {
       console.error(err);
     }
@@ -31,7 +31,7 @@ const CreateBookingPage = () => {
   }, []);
 
   return (
-    <>
+    <Fragment>
       <h1>Create a booking</h1>
       <form onSubmit={createBooking}>
         <select name='pitch' onChange={(e) => setCreateBookingPitch(e.target.value)} value={createBookingPitch}>
@@ -44,7 +44,7 @@ const CreateBookingPage = () => {
         <input type='datetime-local' placeholder='End time' onChange={(e) => setCreateBookingEnd(e.target.value)} value={createBookingEnd} />
         <button type='submit'>Create booking</button>
       </form>
-    </>
+    </Fragment>
   );
 };
 

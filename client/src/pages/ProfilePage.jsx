@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
 import CreateProfileForm from '../components/CreateProfileForm';
 
@@ -7,7 +7,7 @@ const ProfilePage = () => {
 
   const getProfile = async () => {
     try {
-      const profile = await axios.get('http://localhost:5000/api/profile/me');
+      const profile = await axios.get('/api/profile/me');
       if (profile.data !== null) {
         setExistingProfile(profile.data)
       } 
@@ -21,7 +21,7 @@ const ProfilePage = () => {
   }, [])
 
   return (
-    <>
+    <Fragment>
       {existingProfile === false ? <CreateProfileForm /> :
         <div>
           <h1>{existingProfile.user.username}</h1>
@@ -30,7 +30,7 @@ const ProfilePage = () => {
           <p>{existingProfile.bio}</p>
         </div>
       }
-    </>
+    </Fragment>
   )
 };
 

@@ -12,7 +12,7 @@ const CreateProfileForm = () => {
     try {
       const profileData = { height, weight, bio };
       console.log(profileData);
-      await axios.post('http://localhost:5000/api/profile/me', profileData);
+      await axios.post('/api/profile/me', profileData);
     } catch (err) {
       console.error(err);
     }
