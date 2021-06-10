@@ -1,7 +1,9 @@
 const router = require('express').Router();
 const User = require('../models/userModel');
+const Profile = require('../models/profileModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Booking = require('../models/bookingModel');
 
 // Registers a new user
 router.post('/', async (req, res) => {
@@ -77,7 +79,7 @@ router.get('/loggedin', (req, res) => {
 
     res.send(true);
   } catch (err) {
-    console.error(err)
+    console.error(err);
     res.status(500).send();
     res.json(false);
   }
@@ -91,12 +93,54 @@ router.get('/admin', async (req, res) => {
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     // const userId = verified.user
-    const user = await User.findById( verified.user );
+    const user = await User.findById(verified.user);
     if (user.isAdmin === true) res.send(true);
   } catch (err) {
     console.error(err);
     res.status(500).send();
     res.json(false);
+  }
+});
+
+// Get all users (For admins only)
+router.get('/allusers', async (req, res) => {
+  try {
+    const users = await User.find({ isAdmin: false }).select('-passwordHash -__v -isAdmin').populate('profile');
+    res.send(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send();
+  }
+});
+
+// router.get('/test', async (req, res) => {
+//   try {
+//     const bookings = await Booking.aggregate
+//     res.send(users);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send();
+//   }
+// });
+
+// Admin deletes user, along with its Profile and bookings
+router.delete('/delete/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    // deletes User model
+    await User.findByIdAndDelete(userId);
+
+    // pull user's id from users array of any bookings that user has joined
+    await Booking.updateMany({}, { $pull: { users: userId } }, { multi: true });
+
+    // deletes user's Profile model
+    await Profile.findOneAndDelete({ user: userId });
+
+    res.json('User has been deleted from the database.');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send();
   }
 });
 

@@ -28,6 +28,7 @@ export default function Header() {
                   <LinkContainer to='/createbooking'><Nav.Link>Create booking</Nav.Link></LinkContainer>
                   <LinkContainer to='/bookingreq'><Nav.Link>Booking Requests</Nav.Link></LinkContainer>
                   <LinkContainer to='/addpitch'><Nav.Link>Add pitch</Nav.Link></LinkContainer>
+                  <LinkContainer to='/users'><Nav.Link>Users</Nav.Link></LinkContainer>
                   <LogoutBtn />
                 </Fragment>
               )}

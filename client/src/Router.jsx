@@ -13,6 +13,7 @@ import { Container } from 'react-bootstrap'
 import Footer from './components/Footer';
 import { PitchForm } from './components/Pitch';
 import MyBookingsPage from './pages/booking/MyBookingsPage';
+import AllUsersPage from './pages/user/AllUsersPage';
 
 export default function Router() {
   const { loggedIn, admin } = useContext(AuthContext);
@@ -26,16 +27,17 @@ export default function Router() {
             <Route exact path='/'><div>Home</div></Route>
             <Route path='/pitches' component={PitchPage}></Route>
             <Route path='/bookings' component={BookingsPage}></Route>
+            {admin === true &&  (
+              <Fragment>
+                <Route path='/createbooking' component={CreateBookingPage}></Route>
+                <Route path='/addpitch' component={PitchForm}></Route>
+                <Route path='/users' component={AllUsersPage}></Route>
+              </Fragment>
+            )}
             {loggedIn === false && (
               <Fragment>
                 <Route path='/register' component={RegisterPage}></Route>
                 <Route path='/login' component={LoginPage}></Route>
-              </Fragment>
-            )}
-            {admin === true && (
-              <Fragment>
-                <Route path='/createbooking' component={CreateBookingPage}></Route>
-                <Route path='/addpitch' component={PitchForm}></Route>
               </Fragment>
             )}
             {loggedIn === true && admin === false && (

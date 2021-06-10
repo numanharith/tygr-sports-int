@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import {  Card } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import moment from 'moment';
 import AuthContext from '../context/AuthContext';
 
@@ -40,7 +40,7 @@ const BookingCard = ({ booking }) => {
   };
 
   useEffect(() => {
-    if (loggedIn === true) {
+    if (loggedIn === true && admin === false) {
       joinedBooking();
     } else {
       return null;
@@ -57,12 +57,12 @@ const BookingCard = ({ booking }) => {
         <Card.Text>{booking.users.length} / 2</Card.Text>
         {!admin && loggedIn && booking.users.length !== undefined && booking.users.length < 2 && userBooked === false && (
           <form onSubmit={joinHandler}>
-            <button type='submit'>Join</button>
+            <Button type='submit' variant="success">Join</Button>
           </form>
         )}
         {!admin && booking.users.length !== undefined && booking.users.length < 2 && userBooked === true && (
           <form onSubmit={cancelHandler}>
-            <button type='submit'>Cancel</button>
+            <Button type='submit' variant="danger">Cancel</Button>
           </form>
         )}
       </Card.Body>
