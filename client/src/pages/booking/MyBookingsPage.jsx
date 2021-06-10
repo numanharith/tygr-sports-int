@@ -9,7 +9,6 @@ const MyBookingsPage = () => {
   const getBookings = async () => {
     try {
       const { data } = await axios.get('http://localhost:5000/api/bookings/mybookings');
-      console.log(data)
       setBookings(data);
     } catch (err) {
       console.error(err);

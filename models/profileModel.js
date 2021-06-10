@@ -8,6 +8,7 @@ const profileSchema = new Schema({
   bio: { type: String },
   bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }],
   date: { type: Date, default: Date.now() },
+  // imageUrl: { type: String },
 });
 
 module.exports = model('Profile', profileSchema);

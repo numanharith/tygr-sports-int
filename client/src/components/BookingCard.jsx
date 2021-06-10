@@ -21,13 +21,13 @@ const BookingCard = ({ booking }) => {
     }
   };
 
-  // const cancelHandler = async (e) => {
-  //   try {
-  //     await axios.put(`http://localhost:5000/api/bookings/join/${booking._id}`);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+  const cancelHandler = async (e) => {
+    try {
+      await axios.put(`http://localhost:5000/api/bookings/join/${booking._id}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   // Checks if user has joined booking
   const joinedBooking = async () => {
@@ -45,7 +45,7 @@ const BookingCard = ({ booking }) => {
     } else {
       return null;
     }
-  },[]);
+  },[joinedBooking]);
 
   return (
     <Card className='my-3 p-3 rounded'>
@@ -60,11 +60,11 @@ const BookingCard = ({ booking }) => {
             <button type='submit'>Join</button>
           </form>
         )}
-        {/* {!admin && booking.users.length !== undefined && booking.users.length < 2 && userBooked === true && (
+        {!admin && booking.users.length !== undefined && booking.users.length < 2 && userBooked === true && (
           <form onSubmit={cancelHandler}>
             <button type='submit'>Cancel</button>
           </form>
-        )} */}
+        )}
       </Card.Body>
     </Card>
   );

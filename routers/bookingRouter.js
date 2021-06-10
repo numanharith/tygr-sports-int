@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Booking = require('../models/bookingModel');
 const User = require('../models/userModel');
+const Profile = require('../models/profileModel');
 const auth = require('../middleware/auth');
 const mongoose = require('mongoose');
 const moment = require('moment');
@@ -11,10 +12,11 @@ router.get('/mybookings', async (req, res) => {
   try {
     const token = req.cookies.token;
     const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const userid = verified.user;
 
     // Populates both bookings and pitch (in the populated bookings object) using deep population
-    const user = await User.findById(verified.user).populate({ path: 'bookings', populate: { path: 'pitch' } });
-    res.json(user.bookings);
+    const profile = await Profile.findOne({ user: userid }).populate({ path: 'bookings', populate: { path: 'pitch' } });
+    res.json(profile.bookings);
   } catch (err) {
     console.error(err);
     res.status(500).send();
@@ -26,9 +28,10 @@ router.get('/:bookingid', async (req, res) => {
   try {
     const token = req.cookies.token;
     const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const userid = verified.user;
 
-    const user = await User.findById(verified.user);
-    if (user.bookings.includes(req.params.bookingid)) {
+    const profile = await Profile.findOne({ user: userid });
+    if (profile.bookings.includes(req.params.bookingid)) {
       res.json(true);
     } else {
       res.json(false);
@@ -70,6 +73,7 @@ router.put('/join/:id', async (req, res) => {
   try {
     const token = req.cookies.token;
     const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const userid = verified.user;
 
     // Add user id to booking's users array
     const booking = await Booking.findById(req.params.id);
@@ -82,8 +86,8 @@ router.put('/join/:id', async (req, res) => {
       await Booking.findByIdAndUpdate(req.params.id, { $addToSet: { users: verified.user } });
     }
 
-    // Add booking id to user's booking's array
-    await User.findByIdAndUpdate(verified.user, { $addToSet: { bookings: req.params.id } });
+    // Add booking id to user profile's booking's array
+    await Profile.findOneAndUpdate({ user: userid }, { $addToSet: { bookings: req.params.id } });
   } catch (err) {
     console.error(err);
     res.status(500).send();

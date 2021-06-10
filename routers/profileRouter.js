@@ -3,6 +3,8 @@ const auth = require('../middleware/auth');
 const jwt = require('jsonwebtoken');
 const Profile = require('../models/profileModel');
 const User = require('../models/userModel');
+const cloudinary = require('../utils/cloudinary');
+const upload = require('../utils/multer');
 
 // Creates profile
 router.post('/me', auth, async (req, res) => {
@@ -18,9 +20,23 @@ router.post('/me', auth, async (req, res) => {
 
     // Get form data
     const { height, weight, bio } = req.body;
-    
+
+    // Sends error if user submits form without filling all the fields
+    if (!height || !weight || !bio) return res.status(422).json({ error: 'Please fill all the fields!' })
+
+    // // Get form data
+    // const { height, weight, bio, imageUrl } = req.body;
+
+    // // Sends error if user submits form without filling all the fields
+    // if (!height || !weight || !bio || !imageUrl) return res.status(422).json({ error: 'Please fill all the fields!' })
+
     // Saves created profile
-    const newProfile = new Profile({ height, weight, bio, user});
+    // const newProfile = new Profile({ height, weight, bio, imageUrl, user });
+    // const savedProfile = await newProfile.save();
+    // res.json(savedProfile)
+
+    // Saves created profile
+    const newProfile = new Profile({ height, weight, bio, user });
     const savedProfile = await newProfile.save();
     res.json(savedProfile)
 
