@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import { PitchForm } from './components/Pitch';
 import MyBookingsPage from './pages/booking/MyBookingsPage';
 import AllUsersPage from './pages/user/AllUsersPage';
+import HomePage from './pages/HomePage';
 
 export default function Router() {
   const { loggedIn, admin } = useContext(AuthContext);
@@ -24,7 +25,7 @@ export default function Router() {
       <main className='py-3'>
         <Container>
           <Switch>
-            <Route exact path='/'><div>Home</div></Route>
+            <Route exact path='/' component={HomePage}></Route>
             <Route path='/pitches' component={PitchPage}></Route>
             <Route path='/bookings' component={BookingsPage}></Route>
             {admin === true &&  (
