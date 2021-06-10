@@ -15,7 +15,7 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const loginData = { username, password };
-      await axios.post('http://localhost:5000/api/auth/login', loginData);
+      await axios.post('/api/auth/login', loginData);
       await getLoggedIn();
       await getAdmin(); 
       history.push('/');

@@ -6,7 +6,7 @@ const BookingReqPage = () => {
   const [bookingReqs, setBookingReqs] = useState([]);
 
   const getBookingReqs = async () => {
-    const bookingReqsRes = await axios.get('http://localhost:5000/api/bookingreq');
+    const bookingReqsRes = await axios.get('/api/bookingreq');
     setBookingReqs(bookingReqsRes.data);
   };
 

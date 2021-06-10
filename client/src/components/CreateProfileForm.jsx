@@ -22,7 +22,7 @@ const CreateProfileForm = () => {
     //   .catch((err) => console.log(err));
     
     const profileData = { height, weight, bio };
-    await axios.post('http://localhost:5000/api/profile/me', profileData);
+    await axios.post('/api/profile/me', profileData);
   };
 
   return (

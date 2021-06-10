@@ -8,7 +8,7 @@ const AllUsersPage = () => {
 
   const getUsers = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/auth/allusers');
+      const { data } = await axios.get('/api/auth/allusers');
       setUsers(data);
     } catch (err) {
       console.error(err);

@@ -22,7 +22,7 @@ const EditProfileForm = () => {
     //   .catch((err) => console.log(err));
     
     const profileData = { height, weight, bio };
-    await axios.put('http://localhost:5000/api/profile/me/update', profileData);
+    await axios.put('/api/profile/me/update', profileData);
   };
 
   return (

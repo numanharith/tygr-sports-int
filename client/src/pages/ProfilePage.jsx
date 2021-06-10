@@ -7,7 +7,7 @@ const ProfilePage = () => {
 
   const getProfile = async () => {
     try {
-      const profile = await axios.get('http://localhost:5000/api/profile/me');
+      const profile = await axios.get('/api/profile/me');
       if (profile.data !== null) {
         setExistingProfile(profile.data)
       } 
