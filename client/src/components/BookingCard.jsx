@@ -23,7 +23,7 @@ const BookingCard = ({ booking }) => {
 
   const cancelHandler = async (e) => {
     try {
-      await axios.put(`http://localhost:5000/api/bookings/join/${booking._id}`);
+      await axios.put(`http://localhost:5000/api/bookings/cancel/${booking._id}`);
     } catch (err) {
       console.error(err);
     }

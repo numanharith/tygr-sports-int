@@ -13,10 +13,18 @@ router.get('/mybookings', async (req, res) => {
     const token = req.cookies.token;
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     const userid = verified.user;
+    
+    // Checks if user has already created a profile
+    const user = await User.findById(userid);
+    if (!user.profile) return res.status(400).json({ errorMessage: 'Please create a profile before joining any booking!' });
+    
+    // Checks if user has any booking in his/her profile
+    const profileCheckForBookings = await Profile.findOne({ user: userid })
+    if (profileCheckForBookings.bookings == 0) return res.status(400).json({ errorMessage: 'You have not joined any booking yet!' });
 
     // Populates both bookings and pitch (in the populated bookings object) using deep population
-    const profile = await Profile.findOne({ user: userid }).populate({ path: 'bookings', populate: { path: 'pitch' } });
-    res.json(profile.bookings);
+    const profileHasBookings = await Profile.findOne({ user: userid }).populate({ path: 'bookings', populate: { path: 'pitch' } });
+    res.json(profileHasBookings.bookings);
   } catch (err) {
     console.error(err);
     res.status(500).send();
@@ -75,6 +83,10 @@ router.put('/join/:id', async (req, res) => {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     const userid = verified.user;
 
+    // Checks if user has already created a profile
+    const user = await User.findById(userid);
+    if (!user.profile) return res.status(400).json({ errorMessage: 'Please create a profile before joining any booking!' });
+
     // Add user id to booking's users array
     const booking = await Booking.findById(req.params.id);
     // If no user has already joined, .length can't be used as users array will be undefined.
@@ -88,6 +100,30 @@ router.put('/join/:id', async (req, res) => {
 
     // Add booking id to user profile's booking's array
     await Profile.findOneAndUpdate({ user: userid }, { $addToSet: { bookings: req.params.id } });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send();
+  }
+});
+
+// User cancels booking
+router.put('/cancel/:id', async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const userid = verified.user;
+
+    // Checks if user has already created a profile
+    const user = await User.findById(userid);
+    if (!user.profile) return res.status(400).json({ errorMessage: 'Please create a profile before joining any booking!' });
+
+    // Removes user id from booking's users array
+    const booking = await Booking.findById(req.params.id);
+    // If no user has already joined, .length can't be used as users array will be undefined.
+    await Booking.findByIdAndUpdate(req.params.id, { $pull: { users: verified.user } });
+
+    // Removes booking id form user profile's booking's array
+    await Profile.findOneAndUpdate({ user: userid }, { $pull: { bookings: req.params.id } });
   } catch (err) {
     console.error(err);
     res.status(500).send();
