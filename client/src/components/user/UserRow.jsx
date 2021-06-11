@@ -7,7 +7,6 @@ const UserRow = ({ user }) => {
     // e.preventDefault();
     try {
       await axios.delete(`/api/auth/delete/${user._id}`)
-      // console.log(`/api/auth/delete/${user._id}`)
     } catch (err) {
       console.error(err);
     }

@@ -8,3 +8,16 @@ main {
   vertical-align: middle;
   padding: 10% 0;
 }
+
+.pitch-img {
+  height: auto;
+  max-height: 250px;
+  width: auto;
+  max-width: 265px;
+  text-align: center;
+}
+
+.pitch-card {
+  width: 300px;
+  height: 330px;
+}

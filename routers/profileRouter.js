@@ -19,24 +19,14 @@ router.post('/me', auth, async (req, res) => {
     if (existingProfile) return res.status(400).json({ errorMessage: 'You already have a profile!' });
 
     // Get form data
-    const { height, weight, bio } = req.body;
+    const { height, weight, bio, url } = req.body;
+    const imageUrl = url;
 
     // Sends error if user submits form without filling all the fields
-    if (!height || !weight || !bio) return res.status(422).json({ error: 'Please fill all the fields!' })
-
-    // // Get form data
-    // const { height, weight, bio, imageUrl } = req.body;
-
-    // // Sends error if user submits form without filling all the fields
-    // if (!height || !weight || !bio || !imageUrl) return res.status(422).json({ error: 'Please fill all the fields!' })
+    if (!height || !weight || !bio || !imageUrl) return res.status(422).json({ error: 'Please fill all the fields!' })
 
     // Saves created profile
-    // const newProfile = new Profile({ height, weight, bio, imageUrl, user });
-    // const savedProfile = await newProfile.save();
-    // res.json(savedProfile)
-
-    // Saves created profile
-    const newProfile = new Profile({ height, weight, bio, user });
+    const newProfile = new Profile({ height, weight, bio, imageUrl, user });
     const savedProfile = await newProfile.save();
     res.json(savedProfile)
 
