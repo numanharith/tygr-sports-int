@@ -8,7 +8,7 @@ const CreateBookingPage = () => {
   const [createBookingEnd, setCreateBookingEnd] = useState('');
 
   const getPitches = async () => {
-    const pitchesRes = await axios.get('http://localhost:5000/api/pitches');
+    const pitchesRes = await axios.get('/api/pitches');
     setPitches(pitchesRes.data);
   };
 
@@ -20,7 +20,7 @@ const CreateBookingPage = () => {
         start: createBookingStart,
         end: createBookingEnd,
       };
-      await axios.post('http://localhost:5000/api/bookings/createbooking', createBookingData);
+      await axios.post('/api/bookings/createbooking', createBookingData);
     } catch (err) {
       console.error(err);
     }

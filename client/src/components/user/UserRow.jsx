@@ -6,8 +6,7 @@ const UserRow = ({ user }) => {
   const deleteUser = async (e) => {
     // e.preventDefault();
     try {
-      await axios.delete(`http://localhost:5000/api/auth/delete/${user._id}`)
-      // console.log(`http://localhost:5000/api/auth/delete/${user._id}`)
+      await axios.delete(`/api/auth/delete/${user._id}`)
     } catch (err) {
       console.error(err);
     }

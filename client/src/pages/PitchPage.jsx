@@ -8,7 +8,7 @@ const PitchPage = () => {
 
   const getPitches = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/pitches');
+      const { data } = await axios.get('/api/pitches');
       setPitches(data);
     } catch (err) {
       console.error(err);

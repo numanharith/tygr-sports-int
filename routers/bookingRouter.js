@@ -16,7 +16,7 @@ router.get('/mybookings', async (req, res) => {
     
     // Checks if user has already created a profile
     const user = await User.findById(userid);
-    if (!user.profile) return res.status(400).json({ errorMessage: 'Please create a profile before joining any booking!' });
+    if (!user.profile) return res.status(400).json({ errorMessage: 'Please create a profile and proceed to join a booking!' });
     
     // Checks if user has any booking in his/her profile
     const profileCheckForBookings = await Profile.findOne({ user: userid })
@@ -36,11 +36,16 @@ router.get('/:bookingid', async (req, res) => {
   try {
     const token = req.cookies.token;
     const verified = jwt.verify(token, process.env.JWT_SECRET);
-    const userid = verified.user;
+    const userId = verified.user;
 
-    const profile = await Profile.findOne({ user: userid });
-    if (profile.bookings.includes(req.params.bookingid)) {
-      res.json(true);
+    // Checks if user has an existing profile
+    const existingProfile = await Profile.findOne({ user: userId });
+    if (existingProfile) {
+      if (existingProfile.bookings.includes(req.params.bookingid)) {
+        res.json(true);
+      } else {
+        res.json(false);
+      }
     } else {
       res.json(false);
     }

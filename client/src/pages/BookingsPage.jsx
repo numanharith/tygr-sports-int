@@ -8,7 +8,7 @@ const BookingsPage = () => {
 
   const getBookings = async () => {
     try {
-      const bookingsData = await axios.get('http://localhost:5000/api/bookings');
+      const bookingsData = await axios.get('/api/bookings');
       setBookings(bookingsData.data);
     } catch (err) {
       console.error(err);

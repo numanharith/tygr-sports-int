@@ -1,6 +1,7 @@
-import React, { useContext, useState, Fragment } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 
 const LoginPage = () => {
@@ -15,24 +16,36 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       const loginData = { username, password };
-      await axios.post('http://localhost:5000/api/auth/login', loginData);
+      await axios.post('/api/auth/login', loginData);
+      history.push('/');
       await getLoggedIn();
       await getAdmin(); 
-      history.push('/');
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <Fragment>
-      <h1>Log into your account</h1>
-      <form onSubmit={login}>
-        <input type='text' placeholder='Username' onChange={(e) => setUsername(e.target.value)} value={username} />
-        <input type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password} />
-        <button type='submit'>Login</button>
-      </form>
-    </Fragment>
+    <Container>
+      <Row className='justify-content-md-center'>
+        <Col xs={12} md={6}>
+          <h1 className='form-header'>Log into your account</h1>
+          <Form onSubmit={login}>
+            <Form.Group controlId='username'>
+              <Form.Label>Username</Form.Label>
+              <Form.Control required type='text' placeholder='Username' onChange={(e) => setUsername(e.target.value)} value={username}></Form.Control>
+            </Form.Group>
+            <br></br>
+            <Form.Group controlId='password'>
+              <Form.Label>Password</Form.Label>
+              <Form.Control required type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password}></Form.Control>
+            </Form.Group>
+            <br></br>
+            <Button type='submit' variant='success'>Login</Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

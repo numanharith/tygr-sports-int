@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 
 export const Pitch = ({ pitch }) => {
   return (
-    <Card className='my-3 p-3 rounded' key={pitch.id}>
+    <Card className='my-3 p-3 rounded pitch-card' key={pitch.id}>
       <Link to='/'>
-        <Card.Img src={pitch.image} />
+        <Card.Img className='img' src={pitch.image} />
       </Link>
 
       <Card.Body>
@@ -39,7 +39,7 @@ export const PitchForm = ({ getPitches }) => {
     e.preventDefault();
     try {
       const addPitchData = { name, address, postalCode, image };
-      await axios.post('http://localhost:5000/api/pitches', addPitchData);
+      await axios.post('/api/pitches', addPitchData);
       getPitches();
     } catch (err) {
       console.error(err);

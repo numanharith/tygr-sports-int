@@ -11,8 +11,8 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
+app.use(express.static(path.resolve(__dirname, 'build')));
 
 // Middleware
 app.use(express.json());
@@ -33,3 +33,9 @@ app.use('/api/bookingreq', require('./routers/bookingReqRouter'));
 app.use('/api/pitches', require('./routers/pitchRouter'));
 app.use('/api/bookings', require('./routers/bookingRouter'));
 app.use('/api/profile', require('./routers/profileRouter'));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});
+
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

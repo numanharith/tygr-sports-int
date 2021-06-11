@@ -6,8 +6,8 @@ const profileSchema = new Schema({
   height: { type: Number, required: true },
   weight: { type: Number, required: true },
   bio: { type: String },
-  bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }],
-  // imageUrl: { type: String },
+  imageUrl: { type: String },
+  bookings: [{ type: Schema.Types.ObjectId, ref: 'Booking' }],  
 });
 
 module.exports = model('Profile', profileSchema);

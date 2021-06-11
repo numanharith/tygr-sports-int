@@ -23,7 +23,7 @@ export default function Header() {
                   <LinkContainer to='/login'><Nav.Link>Login</Nav.Link></LinkContainer>
                 </Fragment>
               )}
-              {admin === true && (
+              {admin && (
                 <Fragment>
                   <LinkContainer to='/createbooking'><Nav.Link>Create booking</Nav.Link></LinkContainer>
                   <LinkContainer to='/bookingreq'><Nav.Link>Booking Requests</Nav.Link></LinkContainer>
