@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Row, Col } from 'react-bootstrap';
-import BookingCard from '../components/BookingCard';
+import { Alert, Row, Col, Container } from 'react-bootstrap';
+import BookingCard from '../../components/BookingCard';
 
 const BookingsPage = () => {
   const [bookings, setBookings] = useState([]);
@@ -20,7 +20,10 @@ const BookingsPage = () => {
   }, []);
 
   return (
-    <div>
+    <Container>
+      {bookings === null ? (
+        <Alert variant='info'>No bookings available</Alert>
+      ) : (
       <Row>
         {bookings.map((booking) => (
           <Col key={booking._id} sm={12} md={6} lg={4} xl={3}>
@@ -28,7 +31,8 @@ const BookingsPage = () => {
           </Col>
         ))}
       </Row>
-    </div>
+      )}
+    </Container>
   );
 };
 

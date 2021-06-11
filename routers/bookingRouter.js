@@ -1,11 +1,11 @@
 const router = require('express').Router();
+const auth = require('../middleware/auth');
+const jwt = require('jsonwebtoken');
+
+// Models
 const Booking = require('../models/bookingModel');
 const User = require('../models/userModel');
 const Profile = require('../models/profileModel');
-const auth = require('../middleware/auth');
-const mongoose = require('mongoose');
-const moment = require('moment');
-const jwt = require('jsonwebtoken');
 
 // Get users's bookings to dispay on MyBookingsPage
 router.get('/mybookings', async (req, res) => {

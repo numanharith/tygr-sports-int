@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import AuthContext from '../context/AuthContext';
-import LogoutBtn from './LogoutBtn';
+import LogoutBtn from './user/LogoutBtn';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'
 

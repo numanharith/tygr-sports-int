@@ -1,8 +1,10 @@
 const router = require('express').Router();
+const auth = require('../middleware/auth');
+
+// Models
 const Pitch = require('../models/pitchModel');
 const Booking = require('../models/bookingModel');
 const Profile = require('../models/profileModel');
-const auth = require('../middleware/auth');
 
 // Add a new pitch
 router.post('/', auth, async (req, res) => {
@@ -11,7 +13,7 @@ router.post('/', auth, async (req, res) => {
     const image = url;
 
     // Sends error if admin submits form without filling all the fields
-    if (!name || !address || !postalCode || !image) return res.status(422).json({ error: 'Please fill all the fields!' })
+    if (!name || !address || !postalCode || !image) return res.status(422).json({ error: 'Please fill all the fields!' });
 
     // Get form data
     const newPitch = new Pitch({ name, address, postalCode, image });
@@ -37,24 +39,24 @@ router.get('/', async (req, res) => {
 // Admin deletes pitch
 router.delete('/delete/:pitchId', async (req, res) => {
   try {
-    const pitchId = req.params.pitchId
-    
+    const pitchId = req.params.pitchId;
+
     // Get all bookingIds that ref the pitchId
     const bookingsId = await Booking.find({ pitch: pitchId }).select('_id');
-    const bookingsIdArray = bookingsId.map(bookingId => bookingId._id)
-    console.log(bookingsIdArray);
-    // Pulls bookingId (that ref the pitchId) from every users' Profile bookings array 
+    const bookingsIdArray = bookingsId.map((bookingId) => bookingId._id);
+
+    // Pulls bookingId (that ref the pitchId) from every users' Profile bookings array
     await Profile.updateMany({}, { $pull: { bookings: { $in: bookingsIdArray } } }, { multi: true });
-    
+
     // Pulls all bookings from Booking model that ref the pitchId
     await Booking.deleteMany({ pitch: pitchId }, { multi: true });
-    
+
     // Deletes pitch from Pitch model
     await Pitch.findByIdAndDelete(pitchId);
   } catch (err) {
     console.error(err);
     res.status(500).send();
   }
-})
+});
 
 module.exports = router;
