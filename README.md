@@ -21,6 +21,7 @@
 ## Wireframing
 ![Screenshot 2021-06-11 at 11 05 16 PM](https://user-images.githubusercontent.com/25051776/121707770-7f8ca500-cb09-11eb-845b-52e3e586cd1c.png)
 [Wireframe Miro Link](https://miro.com/app/board/o9J_l_qfkss=/)
+
 ## Cloudinary
 
 ##### E.g. In my CreateProfileForm.jsx, within the same functional component
@@ -62,4 +63,3 @@ const [imageUrl, setImageUrl] = useState('');
 axios.post('/api/profile/me', { height, weight, bio, imageUrl })
 ```
 and my _imageUrl_ value did not update in time before the axios post request sends the variables to my backend.
-

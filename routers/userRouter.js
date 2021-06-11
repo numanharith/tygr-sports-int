@@ -1,9 +1,11 @@
 const router = require('express').Router();
-const User = require('../models/userModel');
-const Profile = require('../models/profileModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
+// Models
 const Booking = require('../models/bookingModel');
+const User = require('../models/userModel');
+const Profile = require('../models/profileModel');
 
 // Registers a new user
 router.post('/', async (req, res) => {
@@ -112,16 +114,6 @@ router.get('/allusers', async (req, res) => {
     res.status(500).send();
   }
 });
-
-// router.get('/test', async (req, res) => {
-//   try {
-//     const bookings = await Booking.aggregate
-//     res.send(users);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send();
-//   }
-// });
 
 // Admin deletes user, along with its Profile and bookings
 router.delete('/delete/:userId', async (req, res) => {

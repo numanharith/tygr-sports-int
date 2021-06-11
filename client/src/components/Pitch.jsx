@@ -1,15 +1,14 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Card, Alert, Container, Form, Button, Row, Col } from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 
 export const Pitch = ({ pitch }) => {
   const { admin } = useContext(AuthContext);
-  
+
   // Admin deletes booking
   const deleteHandler = async (e) => {
-    // e.preventDefault();
     try {
       await axios.delete(`/api/pitches/delete/${pitch._id}`);
     } catch (err) {
@@ -19,16 +18,10 @@ export const Pitch = ({ pitch }) => {
 
   return (
     <Card className='my-3 p-3 rounded pitch-card' key={pitch.id}>
-      <Link to='/'>
-        <Card.Img className='img' src={pitch.image} />
-      </Link>
+      <Card.Img className='img' src={pitch.image} />
 
       <Card.Body>
-        <Link to={'/'}>
-          <Card.Title as='div'>
-            <strong>{pitch.name}</strong>
-          </Card.Title>
-        </Link>
+        <Card.Title>{pitch.name}</Card.Title>
 
         <Card.Text as='div'>
           <div className='my-3'>
@@ -48,7 +41,7 @@ export const Pitch = ({ pitch }) => {
   );
 };
 
-export const PitchForm = ({ getPitches }) => {
+export const CreatePitchForm = ({ getPitches }) => {
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
   const [postalCode, setPostalCode] = useState('');
@@ -101,7 +94,9 @@ export const PitchForm = ({ getPitches }) => {
               <Form.File required onChange={(e) => setImage(e.target.files[0])}></Form.File>
             </Form.Group>
             <br></br>
-            <Button type='submit' variant='success'><i className="fas fa-plus"></i></Button>
+            <Button type='submit' variant='success'>
+              <i className='fas fa-plus'></i>
+            </Button>
           </Form>
         </Col>
       </Row>

@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const path = require('path');
-const logger = require('morgan');
 const cors = require('cors');
 
 dotenv.config();
@@ -29,7 +28,6 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 
 // Routes
 app.use('/api/auth', require('./routers/userRouter'));
-app.use('/api/bookingreq', require('./routers/bookingReqRouter'));
 app.use('/api/pitches', require('./routers/pitchRouter'));
 app.use('/api/bookings', require('./routers/bookingRouter'));
 app.use('/api/profile', require('./routers/profileRouter'));
