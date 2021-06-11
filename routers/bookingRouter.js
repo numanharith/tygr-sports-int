@@ -59,7 +59,6 @@ router.get('/:bookingid', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const bookings = await Booking.find().populate('pitch');
-    console.log(bookings)
     res.json(bookings);
   } catch (err) {
     console.error(err);
