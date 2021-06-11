@@ -24,7 +24,7 @@ const ProfilePage = () => {
 
   return (
     <Container>
-      {existingProfile === false ? (
+      {!existingProfile ? (
         <CreateProfileForm />
       ) : (
         <Row className='justify-content-md-center'>

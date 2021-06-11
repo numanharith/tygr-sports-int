@@ -28,18 +28,21 @@ export default function Header() {
                   <LinkContainer to='/createbooking'><Nav.Link>Create booking</Nav.Link></LinkContainer>
                   <LinkContainer to='/addpitch'><Nav.Link>Add pitch</Nav.Link></LinkContainer>
                   <LinkContainer to='/users'><Nav.Link>Users</Nav.Link></LinkContainer>
-                  <LogoutBtn />
                 </Fragment>
               )}
               {loggedIn && !admin && (
                 <Fragment>
                   <LinkContainer to='/mybookings'><Nav.Link>My Bookings</Nav.Link></LinkContainer>
                   <LinkContainer to='/profile'><Nav.Link>Profile</Nav.Link></LinkContainer>
-                  <LogoutBtn />
                 </Fragment>
               )}
             </Nav>
           </Navbar.Collapse>
+          {loggedIn && (
+            <Nav className='ml-auto'>
+              <LogoutBtn />
+            </Nav>
+          )}
         </Container>
       </Navbar>
     </header>
