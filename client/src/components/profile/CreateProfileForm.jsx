@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import React, { useState, Fragment } from 'react';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 
 const CreateProfileForm = () => {
@@ -26,7 +26,7 @@ const CreateProfileForm = () => {
   };  
 
   return (
-    <Container>
+    <Fragment>
       <Row className='justify-content-md-center'>
         <Col xs={12} md={6}>
           <h1 className='form-header'>Create a Profile</h1>
@@ -55,7 +55,7 @@ const CreateProfileForm = () => {
           </Form>
         </Col>
       </Row>
-    </Container>
+    </Fragment>
   );
 };
 

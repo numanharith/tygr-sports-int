@@ -8,13 +8,14 @@ import BookingReqPage from './pages/BookingReqPage'
 import PitchPage from './pages/PitchPage'
 import CreateBookingPage from './pages/CreateBookingPage';
 import BookingsPage from './pages/BookingsPage';
-import ProfilePage from './pages/ProfilePage';
+import ProfilePage from './pages/profile/ProfilePage';
 import { Container } from 'react-bootstrap'
 import Footer from './components/Footer';
 import { PitchForm } from './components/Pitch';
 import MyBookingsPage from './pages/booking/MyBookingsPage';
 import AllUsersPage from './pages/user/AllUsersPage';
 import HomePage from './pages/HomePage';
+import EditProfilePage from './pages/profile/EditProfilePage';
 
 export default function Router() {
   const { loggedIn, admin } = useContext(AuthContext);
@@ -46,6 +47,7 @@ export default function Router() {
                 <Route path='/bookingreq' component={BookingReqPage}></Route>
                 <Route path='/profile' component={ProfilePage}></Route>
                 <Route path='/mybookings' component={MyBookingsPage}></Route>
+                <Route path='/editprofile' component={EditProfilePage}></Route>
               </Fragment>
             )}
           </Switch>

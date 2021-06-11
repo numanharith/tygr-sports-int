@@ -28,7 +28,7 @@ router.post('/me', auth, async (req, res) => {
     // Saves created profile
     const newProfile = new Profile({ height, weight, bio, imageUrl, user });
     const savedProfile = await newProfile.save();
-    res.json('Pitch has been successfully added!')
+    res.json('Profile has been successfully created!')
 
     // References created profile to User model
     await User.findByIdAndUpdate(user, { $set: { "profile": savedProfile._id } })
@@ -45,9 +45,41 @@ router.get('/me', auth, async (req, res) => {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     const user = verified.user;
 
-    const profile = await Profile.findOne({ "user": user }).populate('user');
+    const profile = await Profile.findOne({ "user": user }).populate('user', '-_id -passwordHash -profile -isAdmin');
     if (!profile) return res.json(null);
     res.json(profile);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send();
+  }
+});
+
+// Edit/Update current user's profile
+router.put('/me', auth, async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const user = verified.user;
+
+    const profile = await Profile.findOne({ "user": user }).populate('user', '-_id -passwordHash -profile -isAdmin');
+    if (!profile) return res.json(null);
+
+    // Get form data
+    const { height, weight, bio, url } = req.body;
+    const imageUrl = url;
+
+    // Sends error if user submits form without filling all the fields
+    if (!height || !weight || !bio || !imageUrl) return res.status(422).json({ error: 'Please fill all the fields!' })
+
+    // Updates created profile
+    await Profile.findOneAndUpdate({ "user": user }, { $set: {
+      height: height,
+      weight: weight,
+      bio: bio,
+      imageUrl: imageUrl
+    }})
+
+    res.json('Profile has been successfully updated!')
   } catch (err) {
     console.error(err);
     res.status(500).send();
