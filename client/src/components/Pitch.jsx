@@ -1,9 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { Card, Alert, Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
 
 export const Pitch = ({ pitch }) => {
+  const { admin } = useContext(AuthContext);
+  
+  // Admin deletes booking
+  const deleteHandler = async (e) => {
+    // e.preventDefault();
+    try {
+      await axios.delete(`/api/pitches/delete/${pitch._id}`);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <Card className='my-3 p-3 rounded pitch-card' key={pitch.id}>
       <Link to='/'>
@@ -23,7 +36,13 @@ export const Pitch = ({ pitch }) => {
           </div>
         </Card.Text>
 
-        {/* <Card.Text as='h3'>${product.price}</Card.Text> */}
+        {admin && (
+          <form onSubmit={deleteHandler}>
+            <Button type='submit' variant='danger'>
+              Delete
+            </Button>
+          </form>
+        )}
       </Card.Body>
     </Card>
   );
@@ -34,7 +53,7 @@ export const PitchForm = ({ getPitches }) => {
   const [address, setAddress] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [image, setImage] = useState('');
-  const [sucess, setSuccess] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const history = useHistory();
   const addPitch = async (e) => {
@@ -59,7 +78,7 @@ export const PitchForm = ({ getPitches }) => {
     <Container>
       <Row className='justify-content-md-center'>
         <Col xs={12} md={6}>
-          {sucess && <Alert variant='success'>Pitch has been successfully added!</Alert>}
+          {success && <Alert variant='success'>Pitch has been successfully added!</Alert>}
           <h1 className='form-header'>Create a Pitch</h1>
           <Form onSubmit={addPitch}>
             <Form.Group controlId='pitchName'>

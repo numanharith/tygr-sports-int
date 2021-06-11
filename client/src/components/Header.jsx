@@ -26,7 +26,6 @@ export default function Header() {
               {loggedIn && admin && (
                 <Fragment>
                   <LinkContainer to='/createbooking'><Nav.Link>Create booking</Nav.Link></LinkContainer>
-                  <LinkContainer to='/bookingreq'><Nav.Link>Booking Requests</Nav.Link></LinkContainer>
                   <LinkContainer to='/addpitch'><Nav.Link>Add pitch</Nav.Link></LinkContainer>
                   <LinkContainer to='/users'><Nav.Link>Users</Nav.Link></LinkContainer>
                   <LogoutBtn />
@@ -34,7 +33,6 @@ export default function Header() {
               )}
               {loggedIn && !admin && (
                 <Fragment>
-                  <LinkContainer to='/mybookingreq'><Nav.Link>My Requests</Nav.Link></LinkContainer>
                   <LinkContainer to='/mybookings'><Nav.Link>My Bookings</Nav.Link></LinkContainer>
                   <LinkContainer to='/profile'><Nav.Link>Profile</Nav.Link></LinkContainer>
                   <LogoutBtn />

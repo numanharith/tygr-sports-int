@@ -131,7 +131,7 @@ router.delete('/delete/:userId', async (req, res) => {
     // deletes User model
     await User.findByIdAndDelete(userId);
 
-    // pull user's id from users array of any bookings that user has joined
+    // Pull user's id from users array of any bookings that user has joined
     await Booking.updateMany({}, { $pull: { users: userId } }, { multi: true });
 
     // deletes user's Profile model

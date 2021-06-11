@@ -59,7 +59,7 @@ router.get('/:bookingid', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const bookings = await Booking.find().populate('pitch');
-
+    console.log(bookings)
     res.json(bookings);
   } catch (err) {
     console.error(err);
@@ -133,5 +133,22 @@ router.put('/cancel/:id', async (req, res) => {
     res.status(500).send();
   }
 });
+
+// Admin deletes booking
+router.delete('/delete/:bookingId', async (req, res) => {
+  try {
+    const bookingId = req.params.bookingId
+
+    // Deletes booking from Booking model
+    await Booking.findByIdAndDelete(bookingId);
+
+    // Pulls bookingId from every users' profile bookings array
+    await Profile.updateMany({}, { $pull: { bookings: bookingId } }, { multi: true });
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send();
+  }
+})
 
 module.exports = router;

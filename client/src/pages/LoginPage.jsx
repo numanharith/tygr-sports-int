@@ -18,9 +18,9 @@ const LoginPage = () => {
     try {
       const loginData = { username, password };
       await axios.post('/api/auth/login', loginData);
-      history.push('/');
       await getLoggedIn();
       await getAdmin(); 
+      history.push('/');
     } catch (err) {
       setError(err.response.data.errorMessage);
     }
