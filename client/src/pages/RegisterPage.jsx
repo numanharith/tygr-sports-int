@@ -1,13 +1,14 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Alert, Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVerify, setPasswordVerify] = useState('');
+  const [error, setError] = useState('');
 
   const { getLoggedIn } = useContext(AuthContext);
 
@@ -21,7 +22,7 @@ const RegisterPage = () => {
       await getLoggedIn();
       history.push('/');
     } catch (err) {
-      console.error(err);
+      setError(err.response.data.errorMessage);
     }
   };
 
@@ -29,6 +30,7 @@ const RegisterPage = () => {
     <Container>
       <Row className='justify-content-md-center'>
         <Col xs={12} md={6}>
+          {error && <Alert variant='danger'>{error}</Alert>}
           <h1 className='form-header'>Register for a new account</h1>
           <Form onSubmit={register}>
             <Form.Group controlId='username'>
@@ -43,7 +45,7 @@ const RegisterPage = () => {
             <br></br>
             <Form.Group controlId='passwordVerify'>
               <Form.Label>Cornfirm Password</Form.Label>
-              <Form.Control required placeholder='Confirm password' onChange={(e) => setPasswordVerify(e.target.value)} value={passwordVerify}></Form.Control>
+              <Form.Control required type='password' placeholder='Confirm password' onChange={(e) => setPasswordVerify(e.target.value)} value={passwordVerify}></Form.Control>
             </Form.Group>
             <br></br>
             <Button type='submit' variant='success'>Register</Button>

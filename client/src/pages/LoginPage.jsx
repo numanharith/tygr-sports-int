@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Alert, Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const { getLoggedIn, getAdmin } = useContext(AuthContext);
 
@@ -21,7 +22,7 @@ const LoginPage = () => {
       await getLoggedIn();
       await getAdmin(); 
     } catch (err) {
-      console.error(err);
+      setError(err.response.data.errorMessage);
     }
   };
 
@@ -29,6 +30,7 @@ const LoginPage = () => {
     <Container>
       <Row className='justify-content-md-center'>
         <Col xs={12} md={6}>
+          {error && <Alert variant='danger'>{error}</Alert>}
           <h1 className='form-header'>Log into your account</h1>
           <Form onSubmit={login}>
             <Form.Group controlId='username'>
