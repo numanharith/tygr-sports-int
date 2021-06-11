@@ -54,4 +54,23 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
+
+// Checks if user has an existing profile before they're allowed to join a booking
+router.get('/hasprofile', async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = verified.user;
+    const existingProfile = await Profile.findOne({ "user": userId });
+    if (!existingProfile) {
+      res.json(false)
+    } else {
+      res.json(true)
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send();
+  }
+})
+
 module.exports = router;

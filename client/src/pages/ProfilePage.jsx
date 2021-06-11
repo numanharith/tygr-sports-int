@@ -24,7 +24,7 @@ const ProfilePage = () => {
     <Fragment>
       {existingProfile === false ? <CreateProfileForm /> :
         <div>
-          <img src={existingProfile.imageUrl} />
+          <img src={existingProfile.imageUrl} alt={existingProfile.user.username}/>
           <h1>{existingProfile.user.username}</h1>
           <p>{existingProfile.height}</p>
           <p>{existingProfile.weight}</p>

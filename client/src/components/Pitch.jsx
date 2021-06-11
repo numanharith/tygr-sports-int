@@ -7,7 +7,7 @@ export const Pitch = ({ pitch }) => {
   return (
     <Card className='my-3 p-3 rounded pitch-card' key={pitch.id}>
       <Link to='/'>
-        <Card.Img className='pitch-img' src={pitch.image} />
+        <Card.Img className='img' src={pitch.image} />
       </Link>
 
       <Card.Body>

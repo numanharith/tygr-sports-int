@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Card, Button } from 'react-bootstrap';
 import moment from 'moment';
 import AuthContext from '../context/AuthContext';
+import { useHistory } from 'react-router';
 
 const BookingCard = ({ booking }) => {
   const { loggedIn, admin } = useContext(AuthContext);
@@ -13,9 +14,16 @@ const BookingCard = ({ booking }) => {
   let startDate = moment(booking.start).format('LLLL');
   let endDate = moment(booking.end).format('LLLL');
 
+  const history = useHistory();
   const joinHandler = async (e) => {
+    e.preventDefault();
     try {
-      await axios.put(`/api/bookings/join/${booking._id}`);
+      const { data } = await axios.get('/api/profile/hasprofile');
+      if (data) {
+        await axios.put(`/api/bookings/join/${booking._id}`);
+      } else {
+        history.push('/profile');
+      }
     } catch (err) {
       console.error(err);
     }
@@ -48,13 +56,13 @@ const BookingCard = ({ booking }) => {
   },[joinedBooking]);
 
   return (
-    <Card className='my-3 p-3 rounded'>
-      <Card.Img variant='top' src={booking.pitch.image} />
+    <Card className='my-3 p-3 rounded booking-card'>
+      <Card.Img variant='top img' src={booking.pitch.image} />
       <Card.Body>
         <Card.Title>{booking.pitch.name}</Card.Title>
         <Card.Text>Starts: {startDate}</Card.Text>
         <Card.Text>Ends: {endDate}</Card.Text>
-        <Card.Text>{booking.users.length} / 2</Card.Text>
+        <Card.Text>Players joined: {booking.users.length} / 2</Card.Text>
         {!admin && loggedIn && booking.users.length !== undefined && booking.users.length < 2 && userBooked === false && (
           <form onSubmit={joinHandler}>
             <Button type='submit' variant="success">Join</Button>

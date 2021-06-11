@@ -1,6 +1,7 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import AuthContext from '../context/AuthContext';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router';
 
 const RegisterPage = () => {
@@ -11,7 +12,7 @@ const RegisterPage = () => {
   const { getLoggedIn } = useContext(AuthContext);
 
   const history = useHistory();
-  
+
   const register = async (e) => {
     e.preventDefault();
     try {
@@ -25,15 +26,31 @@ const RegisterPage = () => {
   };
 
   return (
-    <Fragment>
-      <h1>Register for a new account</h1>
-      <form onSubmit={register}>
-        <input type='text' placeholder='Username' onChange={(e) => setUsername(e.target.value)} value={username} />
-        <input type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password} />
-        <input type='password' placeholder='Confirm password' onChange={(e) => setPasswordVerify(e.target.value)} value={passwordVerify} />
-        <button type='submit'>Register</button>
-      </form>
-    </Fragment>
+    <Container>
+      <Row className='justify-content-md-center'>
+        <Col xs={12} md={6}>
+          <h1 className='form-header'>Register for a new account</h1>
+          <Form onSubmit={register}>
+            <Form.Group controlId='username'>
+              <Form.Label>Username</Form.Label>
+              <Form.Control required type='text' placeholder='Username' onChange={(e) => setUsername(e.target.value)} value={username}></Form.Control>
+            </Form.Group>
+            <br></br>
+            <Form.Group controlId='password'>
+              <Form.Label>Password</Form.Label>
+              <Form.Control required type='password' placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password}></Form.Control>
+            </Form.Group>
+            <br></br>
+            <Form.Group controlId='passwordVerify'>
+              <Form.Label>Cornfirm Password</Form.Label>
+              <Form.Control required placeholder='Confirm password' onChange={(e) => setPasswordVerify(e.target.value)} value={passwordVerify}></Form.Control>
+            </Form.Group>
+            <br></br>
+            <Button type='submit' variant='success'>Register</Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

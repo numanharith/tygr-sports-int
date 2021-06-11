@@ -9,7 +9,7 @@ main {
   padding: 10% 0;
 }
 
-.pitch-img {
+.img {
   height: auto;
   max-height: 250px;
   width: auto;
@@ -19,5 +19,15 @@ main {
 
 .pitch-card {
   width: 300px;
-  height: 330px;
+  height: 340px;
+}
+
+.booking-card {
+  width: 300px;
+  height: 500px;
+}
+
+.form-header {
+  font-size: 1.8rem;
+  padding:1rem 0;
 }
