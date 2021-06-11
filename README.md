@@ -1,4 +1,7 @@
+# [TygrSports Football Booking](https://tygr-sports.herokuapp.com/)
+
 ## Technologies
+  * Deployment: Heroku
 ###### Frontend
   * ReactJS
   * Cloudinary
