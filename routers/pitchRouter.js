@@ -5,7 +5,13 @@ const auth = require('../middleware/auth');
 // Add a new pitch
 router.post('/', auth, async (req, res) => {
   try {
-    const { name, address, postalCode, image } = req.body;
+    const { name, address, postalCode, url } = req.body;
+    const image = url;
+
+    // Sends error if admin submits form without filling all the fields
+    if (!name || !address || !postalCode || !image) return res.status(422).json({ error: 'Please fill all the fields!' })
+
+    // Get form data
     const newPitch = new Pitch({ name, address, postalCode, image });
     const savedPitch = await newPitch.save();
     res.json(savedPitch);

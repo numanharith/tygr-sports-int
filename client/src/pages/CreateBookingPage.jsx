@@ -35,7 +35,7 @@ const CreateBookingPage = () => {
       <h1>Create a booking</h1>
       <form onSubmit={createBooking}>
         <select name='pitch' onChange={(e) => setCreateBookingPitch(e.target.value)} value={createBookingPitch}>
-          <option value="" selected disabled hidden>Choose a pitch</option>
+          <option value="" defaultValue disabled hidden>Choose a pitch</option>
           {pitches.map((pitch) => {
             return <option value={pitch._id} key={pitch._id}>{pitch.name}</option>;
           })}

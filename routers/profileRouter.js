@@ -28,7 +28,7 @@ router.post('/me', auth, async (req, res) => {
     // Saves created profile
     const newProfile = new Profile({ height, weight, bio, imageUrl, user });
     const savedProfile = await newProfile.save();
-    res.json(savedProfile)
+    res.json('Pitch has been successfully added!')
 
     // References created profile to User model
     await User.findByIdAndUpdate(user, { $set: { "profile": savedProfile._id } })

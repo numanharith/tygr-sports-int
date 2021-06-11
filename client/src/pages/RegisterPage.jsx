@@ -48,7 +48,7 @@ const RegisterPage = () => {
               <Form.Control required type='password' placeholder='Confirm password' onChange={(e) => setPasswordVerify(e.target.value)} value={passwordVerify}></Form.Control>
             </Form.Group>
             <br></br>
-            <Button type='submit' variant='success'>Register</Button>
+            <Button type='submit' variant='primary'>Register</Button>
           </Form>
         </Col>
       </Row>

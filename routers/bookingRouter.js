@@ -71,7 +71,6 @@ router.get('/', async (req, res) => {
 router.post('/createbooking', auth, async (req, res) => {
   try {
     const { pitch, start, end } = req.body;
-    // pitch = mongoose.Types.ObjectId(pitch);
     const newBooking = new Booking({ pitch, start, end });
     const savedBooking = await newBooking.save();
     res.json(savedBooking);

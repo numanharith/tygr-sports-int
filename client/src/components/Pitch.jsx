@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Card, Alert, Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
 
 export const Pitch = ({ pitch }) => {
   return (
@@ -34,28 +34,58 @@ export const PitchForm = ({ getPitches }) => {
   const [address, setAddress] = useState('');
   const [postalCode, setPostalCode] = useState('');
   const [image, setImage] = useState('');
+  const [sucess, setSuccess] = useState(false);
 
+  const history = useHistory();
   const addPitch = async (e) => {
     e.preventDefault();
     try {
-      const addPitchData = { name, address, postalCode, image };
-      await axios.post('/api/pitches', addPitchData);
-      getPitches();
+      const data = new FormData();
+      data.append('file', image);
+      data.append('upload_preset', 'dpcju0f7');
+      data.append('cloud_name', 'dxnyuudyt');
+      await fetch('https://api.cloudinary.com/v1_1/dxnyuudyt/image/upload', { method: 'post', body: data })
+        .then((res) => res.json())
+        .then(({ url }) => axios.post('/api/pitches/', { name, address, postalCode, url }))
+        .then(setSuccess(true))
+        .catch((err) => console.log(err));
+      history.push('/pitches');
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <Fragment>
-      <h1>Create a Pitch</h1>
-      <form onSubmit={addPitch}>
-        <input type='text' placeholder='Name of pitch' onChange={(e) => setName(e.target.value)} value={name} />
-        <input type='text' placeholder='Address' onChange={(e) => setAddress(e.target.value)} value={address} />
-        <input type='text' placeholder='Postal Code' onChange={(e) => setPostalCode(e.target.value)} value={postalCode} />
-        <input type='text' placeholder='Image URL' onChange={(e) => setImage(e.target.value)} value={image} />
-        <button type='submit'>Add Pitch</button>
-      </form>
-    </Fragment>
+    <Container>
+      <Row className='justify-content-md-center'>
+        <Col xs={12} md={6}>
+          {sucess && <Alert variant='success'>Pitch has been successfully added!</Alert>}
+          <h1 className='form-header'>Create a Pitch</h1>
+          <Form onSubmit={addPitch}>
+            <Form.Group controlId='pitchName'>
+              <Form.Label>Name of pitch</Form.Label>
+              <Form.Control required type='text' placeholder='Name of pitch' onChange={(e) => setName(e.target.value)} value={name} />
+            </Form.Group>
+            <br></br>
+            <Form.Group controlId='address'>
+              <Form.Label>Address</Form.Label>
+              <Form.Control required type='text' placeholder='Address' onChange={(e) => setAddress(e.target.value)} value={address} />
+            </Form.Group>
+            <br></br>
+            <Form.Group controlId='postalCode'>
+              <Form.Label>Postal Code</Form.Label>
+              <Form.Control required type='text' placeholder='Postal Code' onChange={(e) => setPostalCode(e.target.value)} value={postalCode} />
+            </Form.Group>
+            <br></br>
+            <Form.Group controlId='image'>
+              <Form.Label>Image</Form.Label>
+              <Form.File required onChange={(e) => setImage(e.target.files[0])}></Form.File>
+            </Form.Group>
+            <br></br>
+            <Button type='submit' variant='success'><i className="fas fa-plus"></i></Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 };

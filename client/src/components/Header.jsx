@@ -23,7 +23,7 @@ export default function Header() {
                   <LinkContainer to='/login'><Nav.Link>Login</Nav.Link></LinkContainer>
                 </Fragment>
               )}
-              {admin && (
+              {loggedIn && admin && (
                 <Fragment>
                   <LinkContainer to='/createbooking'><Nav.Link>Create booking</Nav.Link></LinkContainer>
                   <LinkContainer to='/bookingreq'><Nav.Link>Booking Requests</Nav.Link></LinkContainer>
@@ -32,7 +32,7 @@ export default function Header() {
                   <LogoutBtn />
                 </Fragment>
               )}
-              {loggedIn === true && admin === false && (
+              {loggedIn && !admin && (
                 <Fragment>
                   <LinkContainer to='/mybookingreq'><Nav.Link>My Requests</Nav.Link></LinkContainer>
                   <LinkContainer to='/mybookings'><Nav.Link>My Bookings</Nav.Link></LinkContainer>
