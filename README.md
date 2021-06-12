@@ -52,7 +52,11 @@ const createProfile = async (e) => {
   <Form.File onChange={(e) => setImage(e.target.files[0])}></Form.File>
 </Form.Group>
 ```
-One key takeaway here is that react state can't be updated in the async function createProfile. I initially tried:
+When the profile is submitted or saved, the image will be posted to my Cloudinary API URL using the fetch request, which will then return the following response below:
+![Screenshot 2021-06-12 at 9 48 01 AM](https://user-images.githubusercontent.com/25051776/121761676-c4452a00-cb63-11eb-9067-f6ac024c5572.png)
+Since I only need the URL, I deconstructed it from the object and then upload it to my database as shown in the axios post request above.
+
+One key takeaway was that react state can't be updated in the async function createProfile. I initially tried:
 ```jsx
 const [imageUrl, setImageUrl] = useState('');
 
@@ -72,4 +76,12 @@ and my _imageUrl_ value did not update in time before the axios post request sen
 npm i axios bootstrap moment react react-dom react-router-dom react-router-bootstrap react-bootstrap
 ```
 ##### In client directory
+```
 npm i bcryptjs body-parser cookie-parser cors dotenv express express-jwt express validator jsonwebtoken mongoose path config
+```
+### Create a .env file in the root directory
+##### Indicate your JWT secret key and MongoDB cluster connection string
+```
+JWT_SECRET=
+MONGODB_URI=
+```
