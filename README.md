@@ -71,23 +71,6 @@ axios.post('/api/profile/me', { height, weight, bio, imageUrl })
 ```
 and my _imageUrl_ value did not update in time before the axios post request sends the variables to my backend.
 
-## Installation on localhost
-### Packages
-##### On root directory
-```
-npm i axios bootstrap moment react react-dom react-router-dom react-router-bootstrap react-bootstrap
-```
-##### In client directory
-```
-npm i bcryptjs body-parser cookie-parser cors dotenv express express-jwt express validator jsonwebtoken mongoose path config
-```
-### Create a .env file in the root directory
-##### Indicate your JWT secret key and MongoDB cluster connection string
-```
-JWT_SECRET=
-MONGODB_URI=
-```
-
 ## Challenges
 ### Data handling in NoSQL
 ##### E.g. Admin deletes a Pitch
@@ -141,6 +124,23 @@ const auth = (req, res, next) => {
     res.status(401).json({ errorMessage: 'Unauthorized' });
   }
 };
+```
+
+## Installation on localhost
+### Packages
+##### On root directory
+```
+npm i axios bootstrap moment react react-dom react-router-dom react-router-bootstrap react-bootstrap
+```
+##### In client directory
+```
+npm i bcryptjs body-parser cookie-parser cors dotenv express express-jwt express validator jsonwebtoken mongoose path config
+```
+### Create a .env file in the root directory
+##### Indicate your JWT secret key and MongoDB cluster connection string
+```
+JWT_SECRET=
+MONGODB_URI=
 ```
 
 ## References
