@@ -116,3 +116,7 @@ router.delete('/delete/:pitchId', async (req, res) => {
 });
 ```
 When the admin deleted a pitch, I had to manually remove the pitch references in the other two models (Profile, Booking) as shown above. In a SQL database, the related data would automatically be deleted in cascade.
+
+## References
+  * [MERN Stack Authentication using express-jwt](https://youtube.com/playlist?list=PLJM1tXwlGdaf57oUx0rIqSW668Rpo_7oU)
+  * [Implementing Cloudinary with MERN Stack](https://youtu.be/uP568vOaBbQ)
