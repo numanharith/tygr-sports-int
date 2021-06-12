@@ -88,3 +88,31 @@ npm i bcryptjs body-parser cookie-parser cors dotenv express express-jwt express
 JWT_SECRET=
 MONGODB_URI=
 ```
+
+## Challenges
+### Data handling in NoSQL
+##### E.g. Admin deletes a Pitch
+```javascript
+router.delete('/delete/:pitchId', async (req, res) => {
+  try {
+    const pitchId = req.params.pitchId;
+
+    // Get all bookingIds that ref the pitchId
+    const bookingsId = await Booking.find({ pitch: pitchId }).select('_id');
+    const bookingsIdArray = bookingsId.map((bookingId) => bookingId._id);
+
+    // Pulls bookingId (that ref the pitchId) from every users' Profile bookings array
+    await Profile.updateMany({}, { $pull: { bookings: { $in: bookingsIdArray } } }, { multi: true });
+
+    // Pulls all bookings from Booking model that ref the pitchId
+    await Booking.deleteMany({ pitch: pitchId }, { multi: true });
+
+    // Deletes pitch from Pitch model
+    await Pitch.findByIdAndDelete(pitchId);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send();
+  }
+});
+```
+When the admin deleted a pitch, I had to manually remove the pitch references in the other two models (Profile, Booking) as shown above. In a SQL database, the related data would automatically be deleted in cascade.
