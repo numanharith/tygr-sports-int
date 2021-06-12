@@ -22,6 +22,52 @@
 ![Screenshot 2021-06-11 at 11 05 16 PM](https://user-images.githubusercontent.com/25051776/121707770-7f8ca500-cb09-11eb-845b-52e3e586cd1c.png)
 [Wireframe Miro Link](https://miro.com/app/board/o9J_l_qfkss=/)
 
+## Context API
+#### Maintaining users' authentication loggedIn and admin state throughout the app
+##### In AuthContext.jsx
+```jsx
+const AuthContext = createContext();
+
+const AuthContextProvider = ({ children }) => {
+  const [loggedIn, setLoggedIn] = useState(undefined);
+  const [admin, setAdmin] = useState(false);
+
+  const getAdmin = async() => {
+    const res = await axios.get('/api/auth/admin');
+    setAdmin(res.data)
+  }
+
+  const getLoggedIn = async () => {
+    const res = await axios.get('/api/auth/loggedin');
+    setLoggedIn(res.data);
+  };
+
+  useEffect(() => {
+    getLoggedIn();
+    getAdmin();
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ loggedIn, getLoggedIn, admin, getAdmin }}>
+      {children}
+    </AuthContext.Provider>
+  )
+};
+
+export default AuthContext;
+export { AuthContextProvider };
+```
+##### Passing the AuthContext API throughout the entire app
+```jsx
+const App = () => {
+  return (
+    <AuthContextProvider>
+      <Router />
+    </AuthContextProvider>
+  );
+};
+```
+
 ## Cloudinary
 
 ##### E.g. In my CreateProfileForm.jsx, within the same functional component
