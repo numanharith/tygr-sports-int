@@ -71,7 +71,7 @@ axios.post('/api/profile/me', { height, weight, bio, imageUrl })
 ```
 and my _imageUrl_ value did not update in time before the axios post request sends the variables to my backend.
 
-## Installtion on localhost
+## Installation on localhost
 
 ### Packages
 ##### On root directory
