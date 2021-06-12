@@ -72,7 +72,6 @@ axios.post('/api/profile/me', { height, weight, bio, imageUrl })
 and my _imageUrl_ value did not update in time before the axios post request sends the variables to my backend.
 
 ## Installation on localhost
-
 ### Packages
 ##### On root directory
 ```
@@ -116,6 +115,33 @@ router.delete('/delete/:pitchId', async (req, res) => {
 });
 ```
 When the admin deleted a pitch, I had to manually remove the pitch references in the other two models (Profile, Booking) as shown above. In a SQL database, the related data would automatically be deleted in cascade.
+
+## Future Improvements
+### DRY
+##### E.g. Repeated lines of code in my express routers
+```javascript
+const token = req.cookies.token;
+if (!token) return res.status(401).json({ errorMessage: 'Unauthorized' });
+const verified = jwt.verify(token, process.env.JWT_SECRET);
+```
+I need to find out how to return the value of _verified_ through the middleware shown below.
+```javascript
+// Allows only logged in user
+const auth = (req, res, next) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ errorMessage: 'Unauthorized' });
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    
+    req.user = verified.user;
+
+    next();
+  } catch (err) {
+    console.error(err);
+    res.status(401).json({ errorMessage: 'Unauthorized' });
+  }
+};
+```
 
 ## References
   * [MERN Stack Authentication using express-jwt](https://youtube.com/playlist?list=PLJM1tXwlGdaf57oUx0rIqSW668Rpo_7oU)
