@@ -33,7 +33,7 @@ export default function Router() {
           <Switch>
             <Route exact path='/' component={HomePage}></Route>
             <Route path='/pitches' component={PitchPage}></Route>
-            <Route path='/bookings' component={BookingsPage}></Route>
+            <Route path='/bookings/' component={BookingsPage}></Route>
             {admin === true && (
               <Fragment>
                 <Route path='/createbooking' component={CreateBookingPage}></Route>

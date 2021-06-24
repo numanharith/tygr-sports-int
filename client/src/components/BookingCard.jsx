@@ -7,7 +7,7 @@ import AuthContext from '../context/AuthContext';
 
 const BookingCard = ({ booking }) => {
   const { loggedIn, admin } = useContext(AuthContext);
-  const [userBooked, setUserBooked] = useState(false);
+  const [booked, setBooked] = useState();
 
   // Convert MongoDB formatted datetime
   let date = moment(booking.start).format('ddd LL');
@@ -16,42 +16,24 @@ const BookingCard = ({ booking }) => {
 
   const history = useHistory();
 
-  // User joins a booking
-  const joinHandler = async (e) => {
+  // Checks if user has joined booking
+  const joinedBooking = async () => {
     try {
-      const { data } = await axios.get('/api/profile/hasprofile');
+      const { data } = await axios.get(`/api/bookings/${booking._id}`);
       if (data) {
-        await axios.put(`/api/bookings/join/${booking._id}`);
+        setBooked(true);
+        console.log(`Line 25: booked is ${booked}`);
       } else {
-        history.push('/profile');
+        setBooked(false);
+        console.log(`Line 28: booked is ${booked}`);
       }
     } catch (err) {
       console.error(err);
     }
   };
 
-  // User cancels booking which they joined
-  const cancelHandler = async (e) => {
-    try {
-      await axios.put(`/api/bookings/cancel/${booking._id}`);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  // Checks if user has joined booking
-  const joinedBooking = async () => {
-    try {
-      const { data } = await axios.get(`/api/bookings/${booking._id}`);
-      if (data === true) setUserBooked(true);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   // Admin deletes booking
-  const deleteHandler = async (e) => {
-    // e.preventDefault();
+  const deleteHandler = async () => {
     try {
       await axios.delete(`/api/bookings/delete/${booking._id}`);
     } catch (err) {
@@ -59,13 +41,36 @@ const BookingCard = ({ booking }) => {
     }
   };
 
-  useEffect(() => {
-    if (loggedIn === true && admin === false) {
-      joinedBooking();
+  const clickHandler = async () => {
+    if (booked) {
+      try {
+        setBooked(false);
+        console.log(`Line 48: booked is ${booked}`);
+        axios.put(`/api/bookings/cancel/${booking._id}`);
+        window.location.reload();
+      } catch (err) {
+        console.error(err);
+      }
     } else {
-      return null;
+      try {
+        const { data } = await axios.get('/api/profile/hasprofile');
+        if (data) {
+          setBooked(true);
+          console.log(`Line 58: booked is ${booked}`);
+          axios.put(`/api/bookings/join/${booking._id}`);
+          window.location.reload();
+        } else {
+          history.push('/profile');
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
-  }, [joinedBooking]);
+  };
+
+  useEffect(() => {
+    joinedBooking();
+  }, []);
 
   return (
     <Card className='my-3 p-3 rounded booking-card'>
@@ -83,19 +88,10 @@ const BookingCard = ({ booking }) => {
             </Button>
           </form>
         )}
-        {!admin && loggedIn && booking.users.length !== undefined && booking.users.length < 2 && userBooked === false && (
-          <form onSubmit={joinHandler}>
-            <Button type='submit' variant='success'>
-              Join
-            </Button>
-          </form>
-        )}
-        {!admin && booking.users.length !== undefined && booking.users.length < 2 && userBooked === true && (
-          <form onSubmit={cancelHandler}>
-            <Button type='submit' variant='danger'>
-              Cancel
-            </Button>
-          </form>
+        {!admin && loggedIn && booking.users.length !== undefined && booking.users.length < 2 && (
+          <Button onClick={clickHandler} variant={booked ? 'danger' : 'success'}>
+            {booked ? 'Cancel' : 'Join'}
+          </Button>
         )}
       </Card.Body>
       <Card.Footer>Players joined: {booking.users.length} / 2</Card.Footer>

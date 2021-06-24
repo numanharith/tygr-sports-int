@@ -16,7 +16,7 @@ export default function Header() {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='mr-auto'>
               <LinkContainer to='/pitches'><Nav.Link>Pitches</Nav.Link></LinkContainer>
-              <LinkContainer to='/bookings'><Nav.Link>Bookings</Nav.Link></LinkContainer>
+              <LinkContainer to='/bookings/'><Nav.Link>Bookings</Nav.Link></LinkContainer>
               {loggedIn === false && (
                 <Fragment>
                   <LinkContainer to='/register'><Nav.Link>Register</Nav.Link></LinkContainer>

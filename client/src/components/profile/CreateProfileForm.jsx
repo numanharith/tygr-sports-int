@@ -1,12 +1,14 @@
 import React, { useState, Fragment } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const CreateProfileForm = () => {
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
   const [image, setImage] = useState('');
   const [bio, setBio] = useState('');
+  const history = useHistory();
 
   const createProfile = async (e) => {
     e.preventDefault();
@@ -20,6 +22,7 @@ const CreateProfileForm = () => {
         .then((res) => res.json())
         .then(({ url }) => axios.post('/api/profile/me', { height, weight, bio, url }))
         .catch((err) => console.log(err));
+      history.push('/bookings');
     } catch (err) {
       console.error(err);
     }
